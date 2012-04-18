@@ -21,7 +21,7 @@ import org.xml.sax.InputSource;
 public class API {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
 
-    public List<Route> getRoutes(String agency, int stopId)
+    public List<Route> getRoutesAtStop(String agency, int stopId)
                                     throws IOException, SAXException {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("command", "predictions");
@@ -62,7 +62,7 @@ public class API {
     public static void main(String[] args) {
         API api = new API();
         try {
-            for (Route r : api.getRoutes("actransit", 57776)) {
+            for (Route r : api.getRoutesAtStop("actransit", 57776)) {
                 System.out.println(r.title + "->" + r.direction);
                 for (int seconds : r.predictions)
                     System.out.println(seconds/60 + " mins " + seconds%60  + " secs");
