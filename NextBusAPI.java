@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.Reader;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -28,38 +27,34 @@ public class NextBusAPI {
         this.agency = agency;
     }
 
-    public List<Route> getPredictions(int stopId)
-                            throws IOException, SAXException {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("command", "predictions");
-        params.put("a", agency);
-        params.put("stopId", Integer.toString(stopId));
-        String url = urlFromParams(params);
+    public List<Route> getPredictions(int stopId) throws IOException, SAXException {
+        StringBuilder sb = new StringBuilder(URL + "?");
+        sb.append("command=predictions");
+        sb.append("&a=" + agency);
+        sb.append("&stopId=" + stopId);
         PredictionsParser parser = new PredictionsParser();
-        parseXml(url, parser);
+        parseXml(sb.toString(), parser);
         return parser.routes;
     }
 
     public List<Stop> getRouteConfig(String routeTitle)
                             throws IOException, SAXException {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("command", "routeConfig");
-        params.put("a", agency);
-        params.put("r", routeTitle);
-        String url = urlFromParams(params);
+        StringBuilder sb = new StringBuilder(URL + "?");
+        sb.append("command=routeConfig");
+        sb.append("&a=" + agency);
+        sb.append("&r=" + routeTitle);
         RouteConfigParser parser = new RouteConfigParser();
-        parseXml(url, parser);
+        parseXml(sb.toString(), parser);
         return parser.stops;
     }
 
     public List<String> getRouteList()
                         throws IOException, SAXException {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("command", "routeList");
-        params.put("a", agency);
-        String url = urlFromParams(params);
+        StringBuilder sb = new StringBuilder(URL + "?");
+        sb.append("command=routeList");
+        sb.append("&a=" + agency);
         RouteListParser parser = new RouteListParser();
-        parseXml(url, parser);
+        parseXml(sb.toString(), parser);
         return parser.tags;
     }
 
@@ -68,17 +63,6 @@ public class NextBusAPI {
         XMLReader xr = XMLReaderFactory.createXMLReader();
         xr.setContentHandler(parser);
         xr.parse(new InputSource(retrieve(url)));
-    }
-
-    /**
-     * Returns a URL string with appended query parameters.
-     */
-    private String urlFromParams(HashMap<String, String> params) {
-        String url = URL + "?";
-        for (String key : params.keySet()) {
-            url = url + key + "=" + params.get(key) + "&";
-        }
-        return url;
     }
 
     /**
