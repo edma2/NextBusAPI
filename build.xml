@@ -8,6 +8,9 @@
         <mkdir dir="${build}" />
         <javac srcdir="${src}" destdir="${build}"/>
     </target>
+    <target name="jar" depends="compile" description="make the jar file ">
+        <jar jarfile="nextbus.jar" basedir="${build}"/>
+    </target>
     <target name="test" depends="compile" description="test run">
         <java classname="ma.eugene.nextbusapi.NextBusAPI">
             <classpath>
