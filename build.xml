@@ -1,0 +1,21 @@
+<project name="NextBusAPI" default="compile" basedir=".">
+    <description>
+        Java API for NextBus public XML feed.
+    </description>
+    <property name="src" location="." />
+    <property name="build" location="build" />
+    <target name="compile" description="compile the source ">
+        <mkdir dir="${build}" />
+        <javac srcdir="${src}" destdir="${build}"/>
+    </target>
+    <target name="test" depends="compile" description="test run">
+        <java classname="ma.eugene.nextbusapi.NextBusAPI">
+            <classpath>
+                <pathelement location="${build}" />
+            </classpath>
+        </java>
+    </target>
+    <target name="clean" description="clean up">
+        <delete dir="${build}" />
+    </target>
+</project>
