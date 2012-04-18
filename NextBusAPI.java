@@ -21,9 +21,14 @@ import org.xml.sax.InputSource;
 
 public class NextBusAPI {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
+    private String agency;
 
-    public List<Route> getPredictions(String agency, int stopId)
-                                    throws IOException, SAXException {
+    public NextBusAPI(String agency) {
+        this.agency = agency;
+    }
+
+    public List<Route> getPredictions(int stopId)
+                            throws IOException, SAXException {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("command", "predictions");
         params.put("a", agency);
@@ -34,8 +39,8 @@ public class NextBusAPI {
         return parser.routes;
     }
 
-    public List<Stop> getRouteConfig(String agency, String routeTitle)
-                                    throws IOException, SAXException {
+    public List<Stop> getRouteConfig(String routeTitle)
+                            throws IOException, SAXException {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("command", "routeConfig");
         params.put("a", agency);
@@ -46,8 +51,8 @@ public class NextBusAPI {
         return parser.stops;
     }
 
-    public List<String> getRouteList(String agency)
-                                    throws IOException, SAXException {
+    public List<String> getRouteList()
+                        throws IOException, SAXException {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("command", "routeList");
         params.put("a", agency);
@@ -58,7 +63,7 @@ public class NextBusAPI {
     }
 
     private void parseXml(String url, DefaultHandler parser)
-                            throws SAXException, IOException {
+                        throws SAXException, IOException {
         XMLReader xr = XMLReaderFactory.createXMLReader();
         xr.setContentHandler(parser);
         xr.parse(new InputSource(retrieve(url)));
@@ -89,10 +94,11 @@ public class NextBusAPI {
     }
 
     public static void main(String[] args) {
-        NextBusAPI api = new NextBusAPI();
+        NextBusAPI api = new NextBusAPI("actransit");
         try {
-            for (String tag : api.getRouteList("actransit"))
-                System.out.println(tag);
+            for (String route : api.getRouteList()) {
+                System.out.println(route);
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
