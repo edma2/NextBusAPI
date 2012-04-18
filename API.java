@@ -30,7 +30,6 @@ public class API {
         XMLReader xr = XMLReaderFactory.createXMLReader();
         Parser parser = new Parser();
         xr.setContentHandler(parser);
-        xr.setErrorHandler(parser);
         xr.parse(new InputSource(retrieve(url)));
         return parser.routes;
     }
