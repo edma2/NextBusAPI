@@ -30,7 +30,7 @@ public class NextBusAPI {
     }
 
     public List<Route> getPredictions(int stopId)
-                        throws IOException, XMLParseException {
+                        throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=predictions");
         sb.append("&a=" + agency);
@@ -41,7 +41,7 @@ public class NextBusAPI {
     }
 
     public List<Stop> getRouteConfig(String routeTitle)
-                        throws IOException, XMLParseException {
+                        throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=routeConfig");
         sb.append("&a=" + agency);
@@ -52,7 +52,7 @@ public class NextBusAPI {
     }
 
     public List<String> getRouteList()
-                        throws IOException, XMLParseException {
+                        throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=routeList");
         sb.append("&a=" + agency);
@@ -62,14 +62,10 @@ public class NextBusAPI {
     }
 
     private void parseXml(String url, DefaultHandler parser)
-                        throws XMLParseException, IOException {
-        try {
-            XMLReader xr = XMLReaderFactory.createXMLReader();
-            xr.setContentHandler(parser);
-            xr.parse(new InputSource(retrieve(url)));
-        } catch (SAXException ex) {
-            throw new XMLParseException(ex.getMessage());
-        }
+                        throws SAXException, IOException {
+        XMLReader xr = XMLReaderFactory.createXMLReader();
+        xr.setContentHandler(parser);
+        xr.parse(new InputSource(retrieve(url)));
     }
 
     /**
@@ -94,7 +90,7 @@ public class NextBusAPI {
                 System.out.println(route);
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (XMLParseException ex1) {
+        } catch (SAXException ex1) {
             ex1.printStackTrace();
         }
     }
