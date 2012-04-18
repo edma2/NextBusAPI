@@ -49,6 +49,19 @@ public class API {
         return parser.stops;
     }
 
+    public List<String> getRouteList(String agency)
+                                    throws IOException, SAXException {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("command", "routeList");
+        params.put("a", agency);
+        String url = urlFromParams(params);
+        XMLReader xr = XMLReaderFactory.createXMLReader();
+        RouteListParser parser = new RouteListParser();
+        xr.setContentHandler(parser);
+        xr.parse(new InputSource(retrieve(url)));
+        return parser.tags;
+    }
+
     /**
      * Returns a URL string with appended query parameters.
      */
@@ -76,14 +89,8 @@ public class API {
     public static void main(String[] args) {
         API api = new API();
         try {
-            for (Route r : api.getPredictions("actransit", 57776)) {
-                System.out.println(r.title + "->" + r.direction);
-                for (int seconds : r.predictions)
-                    System.out.println(seconds/60 + " mins " + seconds%60  + " secs");
-            }
-            for (Stop s : api.getRouteConfig("actransit", "51B")) {
-                System.out.println(s.title + "(" + s.stopId + ")");
-            }
+            for (String tag : api.getRouteList("actransit"))
+                System.out.println(tag);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
