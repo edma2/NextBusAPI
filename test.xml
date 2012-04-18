@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<body copyright="All data copyright AC Transit 2012.">
+<predictions agencyTitle="AC Transit" routeTitle="52" routeTag="52" stopTitle="Hearst Av &amp; Arch St" stopTag="0306550">
+  <direction title="To U.C. Campus">
+  <prediction epochTime="1334711352968" seconds="315" minutes="5" isDeparture="false" dirTag="52_52_0" vehicle="1085" block="52001" tripTag="3192372" />
+  <prediction epochTime="1334712254478" seconds="1216" minutes="20" isDeparture="false" affectedByLayover="true" dirTag="52_52_0" vehicle="1071" block="52008" tripTag="3192324" />
+  <prediction epochTime="1334713154478" seconds="2116" minutes="35" isDeparture="false" affectedByLayover="true" dirTag="52_52_0" vehicle="1086" block="52002" tripTag="3192683" />
+  <prediction epochTime="1334714054478" seconds="3016" minutes="50" isDeparture="false" affectedByLayover="true" dirTag="52_52_0" vehicle="3149" block="52006" tripTag="3192325" />
+  <prediction epochTime="1334715237990" seconds="4200" minutes="70" isDeparture="false" affectedByLayover="true" dirTag="52_52_0" vehicle="1085" block="52001" tripTag="3192326" />
+  </direction>
+</predictions>
+<predictions agencyTitle="AC Transit" routeTitle="65" routeTag="65" stopTitle="Hearst Av &amp; Arch St" stopTag="0306550">
+  <direction title="To Senior Ave. loop">
+  <prediction epochTime="1334713392178" seconds="2354" minutes="39" isDeparture="false" affectedByLayover="true" dirTag="65_63_0" vehicle="5004" block="65001" tripTag="3191559" />
+  </direction>
+  <direction title="To Lawrence Hall of Science">
+  <prediction epochTime="1334711622928" seconds="585" minutes="9" isDeparture="false" affectedByLayover="true" dirTag="65_61_0" vehicle="5014" block="65002" tripTag="3191574" />
+  <prediction epochTime="1334715182788" seconds="4145" minutes="69" isDeparture="false" affectedByLayover="true" dirTag="65_61_0" vehicle="5014" block="65002" tripTag="3191575" />
+  </direction>
+</predictions>
+<predictions agencyTitle="AC Transit" routeTitle="F" routeTag="F" stopTitle="Hearst Av &amp; Arch St" stopTag="0306550">
+  <direction title="To San Francisco">
+  <prediction epochTime="1334712708287" seconds="1670" minutes="27" isDeparture="false" affectedByLayover="true" dirTag="F_119_1" vehicle="1208" block="106004" tripTag="3191145" />
+  <prediction epochTime="1334714757775" seconds="3720" minutes="62" isDeparture="false" affectedByLayover="true" dirTag="F_119_1" vehicle="1095" block="106001" tripTag="3191146" />
+  <prediction epochTime="1334716319898" seconds="5282" minutes="88" isDeparture="false" affectedByLayover="true" dirTag="F_119_1" vehicle="3023" block="106002" tripTag="3191147" />
+  </direction>
+</predictions>
+</body>
+
