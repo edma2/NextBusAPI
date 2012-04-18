@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.HashMap;
 
-public class NextBusAPI {
+public class API {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
 
     public String getPredictions(int stopId) throws IOException {
@@ -56,7 +56,7 @@ public class NextBusAPI {
     }
 
     public static void main(String[] args) {
-        NextBusAPI api = new NextBusAPI();
+        API api = new API();
         try {
             String xml = api.getPredictions(58558);
             System.out.println(xml);
