@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
@@ -21,7 +21,7 @@ import org.xml.sax.InputSource;
 public class API {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
 
-    public LinkedList<Route> getRoutes(String agency, int stopId)
+    public List<Route> getRoutes(String agency, int stopId)
                                     throws IOException, SAXException {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("command", "predictions");
