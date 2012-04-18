@@ -29,7 +29,8 @@ public class NextBusAPI {
         this.agency = agency;
     }
 
-    public List<Route> getPredictions(int stopId) throws IOException, SAXException {
+    public List<Route> getPredictions(int stopId)
+                        throws IOException, XMLParseException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=predictions");
         sb.append("&a=" + agency);
@@ -40,7 +41,7 @@ public class NextBusAPI {
     }
 
     public List<Stop> getRouteConfig(String routeTitle)
-                            throws IOException, SAXException {
+                        throws IOException, XMLParseException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=routeConfig");
         sb.append("&a=" + agency);
@@ -51,7 +52,7 @@ public class NextBusAPI {
     }
 
     public List<String> getRouteList()
-                        throws IOException, SAXException {
+                        throws IOException, XMLParseException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=routeList");
         sb.append("&a=" + agency);
@@ -61,10 +62,14 @@ public class NextBusAPI {
     }
 
     private void parseXml(String url, DefaultHandler parser)
-                        throws SAXException, IOException {
-        XMLReader xr = XMLReaderFactory.createXMLReader();
-        xr.setContentHandler(parser);
-        xr.parse(new InputSource(retrieve(url)));
+                        throws XMLParseException, IOException {
+        try {
+            XMLReader xr = XMLReaderFactory.createXMLReader();
+            xr.setContentHandler(parser);
+            xr.parse(new InputSource(retrieve(url)));
+        } catch (SAXException ex) {
+            throw new XMLParseException(ex.getMessage());
+        }
     }
 
     /**
@@ -89,7 +94,7 @@ public class NextBusAPI {
                 System.out.println(route);
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (SAXException ex1) {
+        } catch (XMLParseException ex1) {
             ex1.printStackTrace();
         }
     }
