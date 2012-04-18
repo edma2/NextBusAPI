@@ -16,6 +16,7 @@ import java.util.List;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLReaderFactory;
+import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.InputSource;
 
 public class API {
@@ -28,10 +29,8 @@ public class API {
         params.put("a", agency);
         params.put("stopId", Integer.toString(stopId));
         String url = urlFromParams(params);
-        XMLReader xr = XMLReaderFactory.createXMLReader();
         PredictionsParser parser = new PredictionsParser();
-        xr.setContentHandler(parser);
-        xr.parse(new InputSource(retrieve(url)));
+        parseXml(url, parser);
         return parser.routes;
     }
 
@@ -42,10 +41,8 @@ public class API {
         params.put("a", agency);
         params.put("r", routeTitle);
         String url = urlFromParams(params);
-        XMLReader xr = XMLReaderFactory.createXMLReader();
         RouteConfigParser parser = new RouteConfigParser();
-        xr.setContentHandler(parser);
-        xr.parse(new InputSource(retrieve(url)));
+        parseXml(url, parser);
         return parser.stops;
     }
 
@@ -55,11 +52,16 @@ public class API {
         params.put("command", "routeList");
         params.put("a", agency);
         String url = urlFromParams(params);
-        XMLReader xr = XMLReaderFactory.createXMLReader();
         RouteListParser parser = new RouteListParser();
+        parseXml(url, parser);
+        return parser.tags;
+    }
+
+    private void parseXml(String url, DefaultHandler parser)
+                            throws SAXException, IOException {
+        XMLReader xr = XMLReaderFactory.createXMLReader();
         xr.setContentHandler(parser);
         xr.parse(new InputSource(retrieve(url)));
-        return parser.tags;
     }
 
     /**
