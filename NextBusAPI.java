@@ -38,7 +38,8 @@ public class NextBusAPI {
     /**
      * Returns the resource located at a the given URL with query string
      * parameters. The data received is assumed to be encoded as UTF-8 by
-     * default, and is returned as a String. Returns null on 404.
+     * default, and is returned as a String. Returns null on any response code
+     * except 200.
      */
     private String retrieve(String url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection)new URL(url).openConnection();
