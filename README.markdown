@@ -1,5 +1,5 @@
 NextBusAPI
-==============
+----------------
 Example: print out all stopIds used by AC Transit
 
 ```java
