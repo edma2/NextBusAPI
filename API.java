@@ -50,15 +50,16 @@ public class API {
             return null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF8"));
         String response = "";
-        while (reader.ready())
-            response += (char)reader.read();
+        String line;
+        while ((line = reader.readLine()) != null)
+            response += (line + "\n");
         return response;
     }
 
     public static void main(String[] args) {
         API api = new API();
         try {
-            String xml = api.getPredictions(58558);
+            String xml = api.getPredictions(57776);
             System.out.println(xml);
         } catch (IOException ex) {
             ex.printStackTrace();
