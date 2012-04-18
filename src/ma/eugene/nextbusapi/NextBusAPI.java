@@ -29,6 +29,13 @@ public class NextBusAPI {
         this.agency = agency;
     }
 
+    /**
+     * Returns a List of Routes representing routes which stop at the stop
+     * specified by stopId.
+     *
+     * @param stopId    the stopId used by the agency to identify the stop
+     * @return          the List of Routes
+     */
     public List<Route> getPredictions(int stopId)
                         throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
@@ -40,6 +47,13 @@ public class NextBusAPI {
         return parser.routes;
     }
 
+    /**
+     * Returns a List of Stops which the specified specified route will stop
+     * at.
+     *
+     * @param routeTitle    the name of the route
+     * @return              the List of Stops
+     */
     public List<Stop> getRouteConfig(String routeTitle)
                         throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
@@ -51,6 +65,11 @@ public class NextBusAPI {
         return parser.stops;
     }
 
+    /**
+     * Returns a List of names of all routes in use by this agency.
+     *
+     * @return  all route names
+     */
     public List<String> getRouteList()
                         throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
