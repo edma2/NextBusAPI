@@ -10,10 +10,6 @@ public class PredictionsParser extends DefaultHandler {
     private String currentRouteTitle;
     private Route currentRoute;
 
-    public PredictionsParser() {
-        super();
-    }
-
     public void startElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName, Attributes attributes) throws SAXException {
         String tag = localName;

@@ -7,10 +7,6 @@ import org.xml.sax.helpers.DefaultHandler;
 public class RouteConfigParser extends DefaultHandler {
     public LinkedList<Stop> stops = new LinkedList<Stop>();
 
-    public RouteConfigParser() {
-        super();
-    }
-
     public void startElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName, Attributes attributes) throws SAXException {
         String tag = localName;
