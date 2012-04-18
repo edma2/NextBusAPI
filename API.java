@@ -21,10 +21,11 @@ import org.xml.sax.InputSource;
 public class API {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
 
-    public LinkedList<Route> getRoutes(int stopId) throws IOException, SAXException {
+    public LinkedList<Route> getRoutes(String agency, int stopId)
+                                    throws IOException, SAXException {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("command", "predictions");
-        params.put("a", "actransit");
+        params.put("a", agency);
         params.put("stopId", Integer.toString(stopId));
         String url = urlFromParams(params);
         XMLReader xr = XMLReaderFactory.createXMLReader();
@@ -61,7 +62,7 @@ public class API {
     public static void main(String[] args) {
         API api = new API();
         try {
-            for (Route r : api.getRoutes(57776)) {
+            for (Route r : api.getRoutes("actransit", 57776)) {
                 System.out.println(r.title + "->" + r.direction);
                 for (int seconds : r.predictions)
                     System.out.println(seconds + " seconds left");
