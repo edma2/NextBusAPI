@@ -24,7 +24,7 @@ public class Parser extends DefaultHandler {
             currentRouteTitle = attributes.getValue("routeTitle");
         } else if (tag.equals("direction")) {
             String direction = attributes.getValue("title");
-            currentRoute = new Route(currentRouteTitle, direction);
+            currentRoute = new Route(direction, currentRouteTitle);
         } else if (tag.equals("prediction")) {
             int seconds = Integer.parseInt(attributes.getValue("seconds"));
             currentRoute.addPrediction(seconds);
@@ -45,7 +45,7 @@ public class Parser extends DefaultHandler {
             xr.setErrorHandler(parser);
             xr.parse("test.xml");
             for (Route r : parser.routes) {
-                System.out.println(r.title);
+                System.out.println(r.title + "->" + r.direction);
                 for (int seconds : r.predictions)
                     System.out.println(seconds);
             }
