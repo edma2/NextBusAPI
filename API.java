@@ -65,7 +65,7 @@ public class API {
             for (Route r : api.getRoutes("actransit", 57776)) {
                 System.out.println(r.title + "->" + r.direction);
                 for (int seconds : r.predictions)
-                    System.out.println(seconds + " seconds left");
+                    System.out.println(seconds/60 + " mins " + seconds%60  + " secs");
             }
         } catch (IOException ex) {
             ex.printStackTrace();
