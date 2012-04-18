@@ -1,3 +1,5 @@
+package ma.eugene.nextbusapi;
+
 import java.util.LinkedList;
 
 public class Route {

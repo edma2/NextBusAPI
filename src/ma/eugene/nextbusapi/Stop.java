@@ -1,3 +1,5 @@
+package ma.eugene.nextbusapi;
+
 public class Stop {
     public String title;
     public int stopId;

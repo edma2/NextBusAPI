@@ -3,6 +3,8 @@
  * http://www.actransit.org/rider-info/nextbus-xml-data/
  * Author: Eugene Ma (github.com/edma2)
  */
+package ma.eugene.nextbusapi;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.IOException;
@@ -83,13 +85,8 @@ public class NextBusAPI {
         NextBusAPI api = new NextBusAPI("actransit");
 
         try {
-            for (String route : api.getRouteList()) {
-                for (Stop stop : api.getRouteConfig(route))
-                    stopIds.add(stop.stopId);
-            }
-            for (int stopId : stopIds) {
-                System.out.println(stopId);
-            }
+            for (String route : api.getRouteList())
+                System.out.println(route);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {

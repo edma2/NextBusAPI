@@ -1,3 +1,5 @@
+package ma.eugene.nextbusapi;
+
 import java.util.LinkedList;
 
 import org.xml.sax.Attributes;
