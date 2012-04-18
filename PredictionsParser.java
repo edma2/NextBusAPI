@@ -5,13 +5,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class Parser extends DefaultHandler {
+public class PredictionsParser extends DefaultHandler {
     public LinkedList<Route> routes = new LinkedList<Route>();
 
     private String currentRouteTitle;
     private Route currentRoute;
 
-    public Parser() {
+    public PredictionsParser() {
         super();
     }
 
