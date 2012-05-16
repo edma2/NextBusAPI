@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.Reader;
-import java.util.HashSet;
 import java.util.List;
 
 import org.xml.sax.XMLReader;
@@ -100,19 +99,7 @@ public class API {
         conn.setRequestMethod("GET");
         conn.setDoOutput(true);
         conn.connect();
-        return new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF8"));
-    }
-
-    public static void main(String[] args) {
-        HashSet<Integer> stopIds = new HashSet<Integer>();
-        API api = new API("actransit");
-        try {
-            for (PredictionsInfo prediction: api.getPredictions(54080))
-                System.out.println(prediction.title + '-' + prediction.direction);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (SAXException ex1) {
-            ex1.printStackTrace();
-        }
+        return new BufferedReader(new InputStreamReader(conn.getInputStream(),
+                    "UTF8"));
     }
 }
