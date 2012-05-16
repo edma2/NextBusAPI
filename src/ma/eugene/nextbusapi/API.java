@@ -1,5 +1,5 @@
 /**
- * Interface for NextBus live XML feed API.
+ * Low-level interface for the NextBus live XML feed.
  * http://www.actransit.org/rider-info/nextbus-xml-data/
  * Author: Eugene Ma (github.com/edma2)
  */
@@ -30,11 +30,11 @@ public class API {
     }
 
     /**
-     * Returns a List of PredictionsInfos representing routes which stop at the stop
-     * specified by stopId.
+     * Send a "predictions" command for the specified stop and parse the
+     * response.
      *
-     * @param stopId    the stopId used by the agency to identify the stop
-     * @return          the List of PredictionsInfos
+     * @param stopId    stop Id used by the agency to identify the stop
+     * @return          List of PredictionInfos
      */
     public List<PredictionsInfo> getPredictions(int stopId)
                         throws IOException, SAXException {
@@ -48,11 +48,11 @@ public class API {
     }
 
     /**
-     * Returns a List of RouteConfigInfos which the specified specified route will stop
-     * at.
+     * Send a "routeConfig" command for the specified route and parse the
+     * response.
      *
-     * @param routeTitle    the name of the route
-     * @return              the List of RouteConfigInfos
+     * @param routeTitle    name of the route
+     * @return              List of RouteConfigInfos
      */
     public List<RouteConfigInfo> getRouteConfig(String routeTitle)
                         throws IOException, SAXException {
@@ -66,9 +66,9 @@ public class API {
     }
 
     /**
-     * Returns a List of names of all routes in use by this agency.
+     * Get names of all routes in use by this agency.
      *
-     * @return  all route names
+     * @return  List<String> of routes.
      */
     public List<String> getRouteList()
                         throws IOException, SAXException {
