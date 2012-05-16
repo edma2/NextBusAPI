@@ -6,24 +6,18 @@ import java.util.HashMap;
 import org.xml.sax.SAXException;
 
 public class TestDrive {
-    /*
     public static void main(String[] args) {
         try {
-            API api = new API("actransit");
-            for (RouteConfigInfo stop : api.getRouteConfig("B")) {
-                System.out.println(stop.stopId);
-                System.out.println(stop.latitude);
-                System.out.println(stop.longitude);
-            }
-            //BusStop stop = new BusStop("actransit", 54080, 1337, 1337);
-            //System.out.println(stop);
+            BusStop stop = new BusStop("actransit", 53511,37.7413699,-122.15662);
+            System.out.println(stop.getPredictions());
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
             ex1.printStackTrace();
         }
-    }*/
+    }
 
+    /*
     public static void main(String[] args) {
         HashMap<Integer, String> stops = new HashMap<Integer, String>();
         API api = new API("actransit");
@@ -41,4 +35,5 @@ public class TestDrive {
             ex1.printStackTrace();
         }
     }
+    */
 }
