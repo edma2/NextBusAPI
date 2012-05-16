@@ -16,7 +16,7 @@ public class BusStop {
     private double longitude;
 
     public BusStop(String agency, int stopId, double latitude,
-            double longitude) throws IOException, org.xml.sax.SAXException {
+            double longitude) {
         this.agency = agency;
         this.stopId = stopId;
         this.latitude = latitude;
