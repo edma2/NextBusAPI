@@ -25,10 +25,10 @@ public class BusStop {
     }
     private HashMap<Route, List<Integer>> predictions = new HashMap<Route,
             List<Integer>>();
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
-    public BusStop(String agency, int stopId, float latitude, float longitude)
+    public BusStop(String agency, int stopId, double latitude, double longitude)
                           throws IOException, org.xml.sax.SAXException {
         API api = new API(agency);
         for (PredictionsInfo p : api.getPredictions(stopId))

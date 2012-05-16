@@ -6,10 +6,10 @@ package ma.eugene.nextbusapi;
 public class RouteConfigInfo {
     public String title;
     public int stopId;
-    public float longitude;
-    public float latitude;
+    public double longitude;
+    public double latitude;
 
-    public RouteConfigInfo(String title, int stopId, float longitude, float latitude) {
+    public RouteConfigInfo(String title, int stopId, double longitude, double latitude) {
         this.title = title;
         this.stopId = stopId;
         this.longitude = longitude;
