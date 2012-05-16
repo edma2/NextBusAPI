@@ -20,7 +20,8 @@ public class BusStop {
             this.direction = direction;
         }
     }
-    private HashMap<Route, List<Integer>> predictions;
+    private HashMap<Route, List<Integer>> predictions = new HashMap<Route,
+            List<Integer>>();
 
     public BusStop(String agency, int stopId, int lat, int lon)
                           throws IOException, org.xml.sax.SAXException {
