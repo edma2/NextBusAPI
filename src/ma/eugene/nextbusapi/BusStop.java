@@ -24,7 +24,7 @@ public class BusStop {
     }
 
     public List<PredictionsInfo> getPredictions()
-                        throws IOException, org.xml.sax.SAXException{
+                        throws IOException, SAXException {
         API api = new API(agency);
         return api.getPredictions(stopId);
     }

@@ -11,11 +11,12 @@ public class NextBus {
     /* For mapping stopIds to unique stops */
     private HashMap<Integer, BusStop> stops = new HashMap<Integer, BusStop>();
 
-    public NextBus(String agency) {
+    public NextBus(String agency) throws IOException, SAXException {
         this.agency = agency;
+        collectStops(); /* might take some time */
     }
 
-    public void collectStops() throws IOException, org.xml.sax.SAXException {
+    public void collectStops() throws IOException, SAXException {
         API api = new API("actransit");
         for (String route : api.getRouteList()) {
             for (RouteConfigInfo i : api.getRouteConfig(route)) {
