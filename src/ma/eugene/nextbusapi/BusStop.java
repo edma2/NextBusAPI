@@ -12,8 +12,8 @@ import org.xml.sax.SAXException;
 public class BusStop {
     private String agency;
     private int stopId;
-    private double latitude;
-    private double longitude;
+    public double latitude;
+    public double longitude;
 
     public BusStop(String agency, int stopId, double latitude,
             double longitude) {
