@@ -106,10 +106,9 @@ public class API {
     public static void main(String[] args) {
         HashSet<Integer> stopIds = new HashSet<Integer>();
         API api = new API("actransit");
-
         try {
-            for (String route : api.getRouteList())
-                System.out.println(route);
+            for (PredictionsInfo predictions: api.getPredictions(54080))
+                System.out.println(predictions.title + '-' + predictions.direction);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
