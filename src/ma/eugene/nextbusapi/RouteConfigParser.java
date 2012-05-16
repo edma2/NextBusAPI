@@ -7,7 +7,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class RouteConfigParser extends DefaultHandler {
-    public LinkedList<Stop> stops = new LinkedList<Stop>();
+    public LinkedList<RouteConfigInfo> stops = new LinkedList<RouteConfigInfo>();
 
     public void startElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName, Attributes attributes) throws SAXException {
@@ -19,7 +19,7 @@ public class RouteConfigParser extends DefaultHandler {
             String title = attributes.getValue("title");
             String lon = attributes.getValue("lon");
             String lat = attributes.getValue("lat");
-            stops.add(new Stop(title, new Integer(stopId), new Float(lon), new Float(lat)));
+            stops.add(new RouteConfigInfo(title, new Integer(stopId), new Float(lon), new Float(lat)));
         }
     }
 }

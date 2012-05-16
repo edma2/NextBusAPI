@@ -7,10 +7,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class PredictionsParser extends DefaultHandler {
-    public LinkedList<Route> routes = new LinkedList<Route>();
+    public LinkedList<PredictionsInfo> routes = new LinkedList<PredictionsInfo>();
 
     private String currentRouteTitle;
-    private Route currentRoute;
+    private PredictionsInfo currentRoute;
 
     public void startElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName, Attributes attributes) throws SAXException {
@@ -19,7 +19,7 @@ public class PredictionsParser extends DefaultHandler {
             currentRouteTitle = attributes.getValue("routeTitle");
         } else if (tag.equals("direction")) {
             String direction = attributes.getValue("title");
-            currentRoute = new Route(direction, currentRouteTitle);
+            currentRoute = new PredictionsInfo(direction, currentRouteTitle);
         } else if (tag.equals("prediction")) {
             int seconds = Integer.parseInt(attributes.getValue("seconds"));
             currentRoute.addPrediction(seconds);
