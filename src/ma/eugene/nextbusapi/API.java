@@ -45,7 +45,7 @@ public class API {
         sb.append("&stopId=" + stopId);
         PredictionsParser parser = new PredictionsParser();
         parseXml(sb.toString(), parser);
-        return parser.routes;
+        return parser.predictions;
     }
 
     /**
@@ -107,8 +107,8 @@ public class API {
         HashSet<Integer> stopIds = new HashSet<Integer>();
         API api = new API("actransit");
         try {
-            for (PredictionsInfo predictions: api.getPredictions(54080))
-                System.out.println(predictions.title + '-' + predictions.direction);
+            for (PredictionsInfo prediction: api.getPredictions(54080))
+                System.out.println(prediction.title + '-' + prediction.direction);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {

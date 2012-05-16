@@ -7,7 +7,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class PredictionsParser extends DefaultHandler {
-    public LinkedList<PredictionsInfo> routes = new LinkedList<PredictionsInfo>();
+    public LinkedList<PredictionsInfo> predictions = new LinkedList<PredictionsInfo>();
 
     private String currentRouteTitle;
     private PredictionsInfo currentRoute;
@@ -25,13 +25,13 @@ public class PredictionsParser extends DefaultHandler {
             currentRoute = new PredictionsInfo(direction, currentRouteTitle);
         } else if (tag.equals("prediction")) {
             int seconds = Integer.parseInt(attributes.getValue("seconds"));
-            currentRoute.addPrediction(seconds);
+            currentRoute.addTime(seconds);
         }
     }
 
     public void endElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName) throws SAXException {
         if (localName.equals("predictions") && !noPredictions)
-            routes.add(currentRoute);
+            predictions.add(currentRoute);
     }
 }
