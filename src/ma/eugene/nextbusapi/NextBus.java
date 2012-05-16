@@ -32,7 +32,8 @@ public class NextBus {
      *
      * @return  distance in meters
      */
-    private double distance(int lat1, int long1, int lat2, int long2) {
+    private double distance(double lat1, double long1, double lat2,
+            double long2) {
         int earthRadius = 6372797;
         double dlat = Math.toRadians(lat2-lat1);
         double dlong = Math.toRadians(long2-long1);
