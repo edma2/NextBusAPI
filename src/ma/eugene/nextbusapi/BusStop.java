@@ -7,10 +7,13 @@ package ma.eugene.nextbusapi;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
 
 public class BusStop {
+    public static List<BusStop> allStops = new LinkedList<BusStop>();
+
     private class Route {
         private String title;
         private String direction;
@@ -32,6 +35,7 @@ public class BusStop {
             predictions.put(new Route(p.title, p.direction), p.times);
         this.latitude = latitude;
         this.longitude = longitude;
+        allStops.add(this);
     }
 
     @Override
