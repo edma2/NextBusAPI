@@ -29,4 +29,14 @@ public class BusStop {
         for (PredictionsInfo p : api.getPredictions(stopId))
             predictions.put(new Route(p.title, p.direction), p.times);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Route r : predictions.keySet()) {
+            sb.append(r.title + ':' + r.direction + predictions.get(r));
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }
