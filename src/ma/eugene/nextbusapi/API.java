@@ -24,6 +24,7 @@ import org.xml.sax.InputSource;
 public class API {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
     private String agency;
+    private boolean debug = true;
 
     public API(String agency) {
         this.agency = agency;
@@ -93,6 +94,8 @@ public class API {
      * default, and a Reader pointing to it is returned.
      */
     private Reader retrieve(String url) throws IOException {
+        if (debug)
+            System.out.println("retrieving: " + url);
         HttpURLConnection conn = (HttpURLConnection)new URL(url).openConnection();
         conn.setRequestMethod("GET");
         conn.setDoOutput(true);
