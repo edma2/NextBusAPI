@@ -22,12 +22,16 @@ public class BusStop {
     }
     private HashMap<Route, List<Integer>> predictions = new HashMap<Route,
             List<Integer>>();
+    private float latitude;
+    private float longitude;
 
-    public BusStop(String agency, int stopId, int lat, int lon)
+    public BusStop(String agency, int stopId, float latitude, float longitude)
                           throws IOException, org.xml.sax.SAXException {
         API api = new API(agency);
         for (PredictionsInfo p : api.getPredictions(stopId))
             predictions.put(new Route(p.title, p.direction), p.times);
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Override
