@@ -5,37 +5,28 @@
 package ma.eugene.nextbusapi;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
 
 public class BusStop {
-    public static List<BusStop> allStops = new LinkedList<BusStop>();
-
-    private class Route {
-        private String title;
-        private String direction;
-
-        public Route(String title, String direction) {
-            this.title = title;
-            this.direction = direction;
-        }
-    }
-    private HashMap<Route, List<Integer>> predictions = new HashMap<Route,
-            List<Integer>>();
+    private String agency;
+    private int stopId;
     private double latitude;
     private double longitude;
 
-    public BusStop(String agency, int stopId, double latitude, double longitude)
-                          throws IOException, org.xml.sax.SAXException {
-        API api = new API(agency);
-        for (PredictionsInfo p : api.getPredictions(stopId))
-            predictions.put(new Route(p.title, p.direction), p.times);
+    public BusStop(String agency, int stopId, double latitude,
+            double longitude) throws IOException, org.xml.sax.SAXException {
+        this.agency = agency;
+        this.stopId = stopId;
         this.latitude = latitude;
         this.longitude = longitude;
-        allStops.add(this);
+    }
+
+    public List<PredictionsInfo> getPredictions()
+                        throws IOException, org.xml.sax.SAXException{
+        API api = new API(agency);
+        return api.getPredictions(stopId);
     }
 
     /**
@@ -54,15 +45,5 @@ public class BusStop {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         double d = earthRadius * c;
         return d;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Route r : predictions.keySet()) {
-            sb.append(r.title + ':' + r.direction + predictions.get(r));
-            sb.append("\n");
-        }
-        return sb.toString();
     }
 }
