@@ -3,10 +3,8 @@ package ma.eugene.nextbusapi;
 import java.util.LinkedList;
 
 /*
- * Information about an incoming bus servicing the specified direction and
- * route.
+ * Predictions for a given route and direction at a stop.
  */
-
 public class PredictionsInfo {
     public String direction;
     public String title;

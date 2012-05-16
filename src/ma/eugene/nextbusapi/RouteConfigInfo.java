@@ -1,5 +1,8 @@
 package ma.eugene.nextbusapi;
 
+/*
+ * Information about a stop.
+ */
 public class RouteConfigInfo {
     public String title;
     public int stopId;
