@@ -8,14 +8,14 @@ import java.util.LinkedList;
 public class PredictionsInfo {
     public String direction;
     public String title;
-    public LinkedList<Integer> predictions = new LinkedList<Integer>();
+    public LinkedList<Integer> times = new LinkedList<Integer>();
 
     public PredictionsInfo(String direction, String title) {
         this.direction = direction;
         this.title = title;
     }
 
-    public void addPrediction(int seconds) {
-        predictions.add(seconds);
+    public void addTime(int seconds) {
+        times.add(seconds);
     }
 }
