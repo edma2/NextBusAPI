@@ -30,13 +30,13 @@ public class NextBusAPI {
     }
 
     /**
-     * Returns a List of Routes representing routes which stop at the stop
+     * Returns a List of PredictionsInfos representing routes which stop at the stop
      * specified by stopId.
      *
      * @param stopId    the stopId used by the agency to identify the stop
-     * @return          the List of Routes
+     * @return          the List of PredictionsInfos
      */
-    public List<Route> getPredictions(int stopId)
+    public List<PredictionsInfo> getPredictions(int stopId)
                         throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=predictions");
@@ -48,13 +48,13 @@ public class NextBusAPI {
     }
 
     /**
-     * Returns a List of Stops which the specified specified route will stop
+     * Returns a List of RouteConfigInfos which the specified specified route will stop
      * at.
      *
      * @param routeTitle    the name of the route
-     * @return              the List of Stops
+     * @return              the List of RouteConfigInfos
      */
-    public List<Stop> getRouteConfig(String routeTitle)
+    public List<RouteConfigInfo> getRouteConfig(String routeTitle)
                         throws IOException, SAXException {
         StringBuilder sb = new StringBuilder(URL + "?");
         sb.append("command=routeConfig");
