@@ -1,5 +1,5 @@
 /**
- * Interface for NextBus live XML feed NextBusAPI.
+ * Interface for NextBus live XML feed API.
  * http://www.actransit.org/rider-info/nextbus-xml-data/
  * Author: Eugene Ma (github.com/edma2)
  */
@@ -21,11 +21,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.InputSource;
 
-public class NextBusAPI {
+public class API {
     private final String URL = "http://webservices.nextbus.com/service/publicXMLFeed";
     private String agency;
 
-    public NextBusAPI(String agency) {
+    public API(String agency) {
         this.agency = agency;
     }
 
@@ -102,7 +102,7 @@ public class NextBusAPI {
 
     public static void main(String[] args) {
         HashSet<Integer> stopIds = new HashSet<Integer>();
-        NextBusAPI api = new NextBusAPI("actransit");
+        API api = new API("actransit");
 
         try {
             for (String route : api.getRouteList())
