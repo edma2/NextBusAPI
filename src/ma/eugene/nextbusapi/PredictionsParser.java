@@ -12,11 +12,14 @@ public class PredictionsParser extends DefaultHandler {
     private String currentRouteTitle;
     private PredictionsInfo currentRoute;
 
+    private boolean noPredictions;
+
     public void startElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName, Attributes attributes) throws SAXException {
         String tag = localName;
         if (tag.equals("predictions")) {
             currentRouteTitle = attributes.getValue("routeTitle");
+            noPredictions = attributes.getValue("dirTitleBecauseNoPredictions") != null;
         } else if (tag.equals("direction")) {
             String direction = attributes.getValue("title");
             currentRoute = new PredictionsInfo(direction, currentRouteTitle);
@@ -28,7 +31,7 @@ public class PredictionsParser extends DefaultHandler {
 
     public void endElement(java.lang.String uri, java.lang.String localName,
             java.lang.String qName) throws SAXException {
-        if (localName.equals("predictions"))
+        if (localName.equals("predictions") && !noPredictions)
             routes.add(currentRoute);
     }
 }

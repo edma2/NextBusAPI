@@ -16,7 +16,7 @@
         <javadoc sourcepath="${src}" destdir="${doc}"/>
     </target>
     <target name="test" depends="compile" description="test run">
-        <java classname="ma.eugene.nextbusapi.NextBusAPI">
+        <java classname="ma.eugene.nextbusapi.API">
             <classpath>
                 <pathelement location="${build}" />
             </classpath>
