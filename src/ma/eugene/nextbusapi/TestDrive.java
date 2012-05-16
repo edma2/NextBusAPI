@@ -8,8 +8,8 @@ import org.xml.sax.SAXException;
 public class TestDrive {
     public static void main(String[] args) {
         try {
-            BusStop stop = new BusStop("actransit", 53511,37.7413699,-122.15662);
-            System.out.println(stop.getPredictions());
+            NextBus nb = new NextBus("actransit");
+            nb.collectStops();
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
