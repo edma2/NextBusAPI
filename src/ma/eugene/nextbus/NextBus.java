@@ -22,8 +22,8 @@ public class NextBus {
         API api = new API("actransit");
         for (String route : api.getRouteList()) {
             for (RouteConfigInfo i : api.getRouteConfig(route)) {
-                BusStop stop = new BusStop(agency, i.stopId, i.latitude,
-                        i.longitude);
+                BusStop stop = new BusStop(agency, i.title, i.stopId,
+                        i.latitude, i.longitude);
                 stops.put(i.stopId, stop);
             }
         }

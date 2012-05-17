@@ -12,19 +12,21 @@ import org.xml.sax.SAXException;
 public class BusStop {
     private String agency;
     private int stopId;
+    private String title;
     public double latitude;
     public double longitude;
 
-    public BusStop(String agency, int stopId, double latitude,
+    public BusStop(String agency, String title, int stopId, double latitude,
             double longitude) {
         this.agency = agency;
+        this.title = title;
         this.stopId = stopId;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     public String toString() {
-        return Integer.toString(stopId);
+        return title;
     }
 
     public List<PredictionsInfo> getPredictions()
