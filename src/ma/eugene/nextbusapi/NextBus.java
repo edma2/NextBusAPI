@@ -34,10 +34,15 @@ public class NextBus {
         List<BusStop> results = new LinkedList<BusStop>();
         for (int stopId : stops.keySet()) {
             BusStop bs = stops.get(stopId);
-            if (distance(bs.latitude, bs.longitude, latitude, longitude) < radius)
+            if (stopDistance(bs, latitude, longitude) < radius)
                 results.add(bs);
         }
         return results;
+    }
+
+    private double stopDistance(BusStop bs, double latitude,
+                                            double longitude) {
+        return distance(bs.latitude, bs.longitude, latitude, longitude);
     }
 
     /**
