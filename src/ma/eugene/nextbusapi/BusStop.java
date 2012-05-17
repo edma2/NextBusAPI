@@ -23,6 +23,10 @@ public class BusStop {
         this.longitude = longitude;
     }
 
+    public String toString() {
+        return Integer.toString(stopId);
+    }
+
     public List<PredictionsInfo> getPredictions()
                         throws IOException, SAXException {
         API api = new API(agency);
