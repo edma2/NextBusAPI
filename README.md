@@ -1,20 +1,13 @@
 NextBusAPI
 ----------------
-Example: print out all stopIds used by AC Transit
+Example: find all stops within 500 meters of a coordinate.
 
 ```java
 public static void main(String[] args) {
-    HashSet<Integer> stopIds = new HashSet<Integer>();
-    API api = new API("actransit");
-
     try {
-        for (String route : api.getRouteList()) {
-            for (RouteConfigInfo stop : api.getRouteConfig(route))
-                stopIds.add(stop.stopId);
-        }
-        for (int stopId : stopIds) {
-            System.out.println(stopId);
-        }
+        NextBus nb = new NextBus("actransit");
+        for (BusStop bs : nb.stopsWithinRange(37.873464, -122.271481, 300))
+            System.out.println(bs);
     } catch (IOException ex) {
         ex.printStackTrace();
     } catch (SAXException ex1) {
