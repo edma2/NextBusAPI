@@ -3,7 +3,7 @@
  * http://www.actransit.org/rider-info/nextbus-xml-data/
  * Author: Eugene Ma (github.com/edma2)
  */
-package ma.eugene.nextbusapi;
+package ma.eugene.nextbus;
 
 import java.net.HttpURLConnection;
 import java.net.URL;

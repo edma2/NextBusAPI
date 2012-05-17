@@ -1,4 +1,4 @@
-package ma.eugene.nextbusapi;
+package ma.eugene.nextbus;
 
 /*
  * Information about a stop.

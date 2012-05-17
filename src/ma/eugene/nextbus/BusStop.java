@@ -2,7 +2,7 @@
  * Bus stop state.
  * Knows prediction information for each incoming route in either direction.
  */
-package ma.eugene.nextbusapi;
+package ma.eugene.nextbus;
 
 import java.io.IOException;
 import java.util.List;

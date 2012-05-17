@@ -1,4 +1,4 @@
-package ma.eugene.nextbusapi;
+package ma.eugene.nextbus;
 
 import java.util.LinkedList;
 
