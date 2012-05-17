@@ -26,7 +26,7 @@ public class BusStop {
     }
 
     public String toString() {
-        return title;
+        return title + "(" + stopId + ")";
     }
 
     public List<PredictionsInfo> getPredictions()
