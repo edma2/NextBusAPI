@@ -2,6 +2,8 @@ package ma.eugene.nextbusapi;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
 
@@ -25,6 +27,17 @@ public class NextBus {
                 stops.put(i.stopId, stop);
             }
         }
+    }
+
+    public List<BusStop> stopsWithinRange(double latitude, double longitude,
+                                            int radius) {
+        List<BusStop> results = new LinkedList<BusStop>();
+        for (int stopId : stops.keySet()) {
+            BusStop bs = stops.get(stopId);
+            if (distance(bs.latitude, bs.longitude, latitude, longitude) < radius)
+                results.add(bs);
+        }
+        return results;
     }
 
     /**
