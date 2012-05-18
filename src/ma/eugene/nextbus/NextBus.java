@@ -26,7 +26,7 @@ public class NextBus {
         }
     }
 
-    public List<BusStop> stopsWithinRange(double latitude, double longitude,
+    public List<BusStop> getStopsInRange(double latitude, double longitude,
                                             int radius) {
         List<BusStop> results = new LinkedList<BusStop>();
         for (int stopId : stops.keySet()) {
@@ -37,11 +37,11 @@ public class NextBus {
         return results;
     }
 
-    public List<Prediction> predictionsWithinRange(double latitude,
+    public List<Prediction> getPredictionsInRange(double latitude,
                                     double longitude, int radius)
                                         throws IOException, SAXException {
         List<Prediction> predictions = new LinkedList<Prediction>();
-        for (BusStop bs : stopsWithinRange(latitude, longitude, radius)) {
+        for (BusStop bs : getStopsInRange(latitude, longitude, radius)) {
             for (Prediction pred : bs.getPredictions())
                 predictions.add(pred);
         }
