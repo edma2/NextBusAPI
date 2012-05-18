@@ -7,10 +7,16 @@ import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
 
-public class NextBus {
-    /* For mapping stopIds to unique stops */
-    private HashMap<Integer, BusStop> stops = new HashMap<Integer, BusStop>();
+public abstract class NextBus {
+    /** Live XML feed API. */
     private API api;
+
+    /** For mapping stopIds to unique stops. */
+    private HashMap<Integer, BusStop> stops = new HashMap<Integer, BusStop>();
+
+    /** Must implement this to provide user location. */
+    protected abstract double getLatitude();
+    protected abstract double getLongitude();
 
     public NextBus(String agency) throws IOException, SAXException {
         this.api = new API(agency);
@@ -26,32 +32,29 @@ public class NextBus {
         }
     }
 
-    public List<BusStop> getStopsInRange(double latitude, double longitude,
-                                            int radius) {
+    public List<BusStop> getStopsInRange(int radius) {
         List<BusStop> results = new LinkedList<BusStop>();
         for (int stopId : stops.keySet()) {
             BusStop bs = stops.get(stopId);
-            if (stopDistance(bs, latitude, longitude) < radius)
+            if (stopDistance(bs) < radius)
                 results.add(bs);
         }
         return results;
     }
 
-    public List<Prediction> getPredictionsInRange(double latitude,
-                                    double longitude, int radius)
-                                        throws IOException, SAXException {
+    public List<Prediction> getPredictionsInRange(int radius)
+                                    throws IOException, SAXException {
         List<Prediction> predictions = new LinkedList<Prediction>();
-        for (BusStop bs : getStopsInRange(latitude, longitude, radius)) {
+        for (BusStop bs : getStopsInRange(radius)) {
             for (Prediction pred : bs.getPredictions())
                 predictions.add(pred);
         }
         return predictions;
     }
 
-    private double stopDistance(BusStop bs, double latitude,
-                                            double longitude) {
-        return distance(bs.getLatitude(), bs.getLongitude(), latitude,
-                longitude);
+    private double stopDistance(BusStop bs) {
+        return distance(bs.getLatitude(), bs.getLongitude(), getLatitude(),
+                getLongitude());
     }
 
     /**
