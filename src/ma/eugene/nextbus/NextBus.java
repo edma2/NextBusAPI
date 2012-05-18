@@ -37,6 +37,17 @@ public class NextBus {
         return results;
     }
 
+    public List<Prediction> predictionsWithinRange(double latitude,
+                                    double longitude, int radius)
+                                        throws IOException, SAXException {
+        List<Prediction> predictions = new LinkedList<Prediction>();
+        for (BusStop bs : stopsWithinRange(latitude, longitude, radius)) {
+            for (Prediction pred : bs.getPredictions())
+                predictions.add(pred);
+        }
+        return predictions;
+    }
+
     private double stopDistance(BusStop bs, double latitude,
                                             double longitude) {
         return distance(bs.getLatitude(), bs.getLongitude(), latitude,

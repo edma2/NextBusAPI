@@ -26,6 +26,15 @@ public class Prediction {
         return bs.getStopId();
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int time : getTimes())
+            sb.append(time);
+        sb.append("]");
+        return sb.toString();
+    }
+
     public List<Integer> getTimes() {
         return info.times;
     }
