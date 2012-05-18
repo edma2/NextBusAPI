@@ -10,28 +10,36 @@ import java.util.List;
 import org.xml.sax.SAXException;
 
 public class BusStop {
-    private String agency;
-    private int stopId;
-    private String title;
-    public double latitude;
-    public double longitude;
+    private API api;
+    private RouteConfigInfo info;
 
-    public BusStop(String agency, String title, int stopId, double latitude,
-            double longitude) {
-        this.agency = agency;
-        this.title = title;
-        this.stopId = stopId;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public BusStop(API api, RouteConfigInfo info) {
+        this.api = api;
+        this.info = info;
+    }
+
+    public int getStopId() {
+        return info.stopId;
+    }
+
+    public String getTitle() {
+        return info.title;
+    }
+
+    public double getLatitude() {
+        return info.latitude;
+    }
+
+    public double getLongitude() {
+        return info.longitude;
     }
 
     public String toString() {
-        return title + "(" + stopId + ")";
+        return getTitle() + "(" + getStopId() + ")";
     }
 
     public List<PredictionsInfo> getPredictions()
                         throws IOException, SAXException {
-        API api = new API(agency);
-        return api.getPredictions(stopId);
+        return api.getPredictions(getStopId());
     }
 }

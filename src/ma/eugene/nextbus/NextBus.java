@@ -8,23 +8,20 @@ import java.util.LinkedList;
 import org.xml.sax.SAXException;
 
 public class NextBus {
-    private String agency;
-
     /* For mapping stopIds to unique stops */
     private HashMap<Integer, BusStop> stops = new HashMap<Integer, BusStop>();
+    private API api;
 
     public NextBus(String agency) throws IOException, SAXException {
-        this.agency = agency;
+        this.api = new API(agency);
         collectStops(); /* might take some time */
     }
 
     public void collectStops() throws IOException, SAXException {
-        API api = new API("actransit");
         for (String route : api.getRouteList()) {
-            for (RouteConfigInfo i : api.getRouteConfig(route)) {
-                BusStop stop = new BusStop(agency, i.title, i.stopId,
-                        i.latitude, i.longitude);
-                stops.put(i.stopId, stop);
+            for (RouteConfigInfo info : api.getRouteConfig(route)) {
+                BusStop stop = new BusStop(api, info);
+                stops.put(stop.getStopId(), stop);
             }
         }
     }
@@ -42,7 +39,8 @@ public class NextBus {
 
     private double stopDistance(BusStop bs, double latitude,
                                             double longitude) {
-        return distance(bs.latitude, bs.longitude, latitude, longitude);
+        return distance(bs.getLatitude(), bs.getLongitude(), latitude,
+                longitude);
     }
 
     /**
