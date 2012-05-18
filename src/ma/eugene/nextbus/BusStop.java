@@ -6,6 +6,7 @@ package ma.eugene.nextbus;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
 
@@ -38,8 +39,10 @@ public class BusStop {
         return getTitle() + "(" + getStopId() + ")";
     }
 
-    public List<PredictionsInfo> getPredictions()
-                        throws IOException, SAXException {
-        return api.getPredictions(getStopId());
+    public List<Prediction> getPredictions() throws IOException, SAXException {
+        List<Prediction> predictions = new LinkedList<Prediction>();
+        for (PredictionsInfo info : api.getPredictions(getStopId()))
+            predictions.add(new Prediction(this, info));
+        return predictions;
     }
 }
