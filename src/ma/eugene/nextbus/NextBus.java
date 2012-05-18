@@ -17,7 +17,7 @@ public class NextBus {
         collectStops(); /* might take some time */
     }
 
-    public void collectStops() throws IOException, SAXException {
+    private void collectStops() throws IOException, SAXException {
         for (String route : api.getRouteList()) {
             for (RouteConfigInfo info : api.getRouteConfig(route)) {
                 BusStop stop = new BusStop(api, info);
