@@ -1,9 +1,6 @@
 package ma.eugene.nextbus;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-
 import org.xml.sax.SAXException;
 
 public class TestDrive {
