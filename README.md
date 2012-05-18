@@ -14,18 +14,12 @@ public class TestDrive {
             NextBus nb = new NextBus("actransit") {
                 @Override
                 protected float stopDistance(BusStop bs) {
-                    return distance(bs.getLatitude(), bs.getLongitude(),
-                            37.873464, -122.271481);
+                    return haversineDistance(bs.getLatitude(),
+                            bs.getLongitude(), 37.873464, -122.271481);
                 }
 
-                /**
-                 * Calculates the great-circle distance between two points
-                 * using the Haversine forumla.
-                 *
-                 * @return  distance in meters
-                 */
-                private float distance(double lat1, double long1, double lat2,
-                        double long2) {
+                private float haversineDistance(double lat1, double long1,
+                                double lat2, double long2) {
                     int earthRadius = 6372797;
                     double dlat = Math.toRadians(lat2-lat1);
                     double dlong = Math.toRadians(long2-long1);
