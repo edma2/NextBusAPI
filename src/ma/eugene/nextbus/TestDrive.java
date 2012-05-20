@@ -11,7 +11,7 @@ public class TestDrive extends NextBus {
         super(agency);
     }
 
-    public TestDrive(String agency, String s) {
+    public TestDrive(String agency, String s) throws IOException {
         super(agency, s);
     }
 
@@ -44,8 +44,7 @@ public class TestDrive extends NextBus {
     public static void main(String[] args) {
         try {
             TestDrive td1 = new TestDrive("actransit");
-            TestDrive td2 = new TestDrive("actransit", td1.toString());
-            System.out.println(td2);
+            System.out.println(td1);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
