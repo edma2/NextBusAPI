@@ -19,6 +19,14 @@ public class BusStop {
         this.info = info;
     }
 
+    /**
+     * @param s 53819|Meekland and A St|37.66703|-122.09905
+     */
+    public BusStop(API api, String s) {
+        this.api = api;
+        this.info = new RouteConfigInfo(s);
+    }
+
     public int getStopId() {
         return info.stopId;
     }

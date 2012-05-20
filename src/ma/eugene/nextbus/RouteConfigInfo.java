@@ -16,6 +16,17 @@ public class RouteConfigInfo {
         this.latitude = latitude;
     }
 
+    /**
+     * @param s 53819|Meekland and A St|37.66703|-122.09905
+     */
+    public RouteConfigInfo(String s) {
+        String[] fields = s.split("\\|");
+        this.stopId = Integer.parseInt(fields[0]);
+        this.title = fields[1];
+        this.latitude = Double.parseDouble(fields[2]);
+        this.longitude = Double.parseDouble(fields[3]);
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(stopId + "|");

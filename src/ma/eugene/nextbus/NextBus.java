@@ -18,8 +18,16 @@ public abstract class NextBus {
     protected abstract float stopDistance(BusStop bs);
 
     public NextBus(String agency) throws IOException, SAXException {
-        this.api = new API(agency);
+        api = new API(agency);
         collectStops(); /* might take some time */
+    }
+
+    public NextBus(String agency, String s) {
+        api = new API(agency);
+        for (String line : s.split("\n")) {
+            BusStop bs = new BusStop(api, line);
+            stops.put(bs.getStopId(), bs);
+        }
     }
 
     private void collectStops() throws IOException, SAXException {

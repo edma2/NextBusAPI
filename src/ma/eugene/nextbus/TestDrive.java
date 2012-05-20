@@ -1,6 +1,9 @@
 package ma.eugene.nextbus;
 
 import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import org.xml.sax.SAXException;
 
 public class TestDrive extends NextBus {
@@ -9,6 +12,10 @@ public class TestDrive extends NextBus {
 
     public TestDrive(String agency) throws IOException, SAXException {
         super(agency);
+    }
+
+    public TestDrive(String agency, String s) {
+        super(agency, s);
     }
 
     @Override
@@ -39,12 +46,21 @@ public class TestDrive extends NextBus {
 
     public static void main(String[] args) {
         try {
-            TestDrive td = new TestDrive("actransit");
+            FileInputStream fis = new FileInputStream("stops");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+
+            StringBuilder sb = new StringBuilder();
+            String s;
+            while ((s = br.readLine()) != null)
+                sb.append(s + "\n");
+            if (sb.charAt(sb.length()-1) == '\n')
+                sb.deleteCharAt(sb.length()-1);
+
+            TestDrive td = new TestDrive("actransit", sb.toString());
             System.out.println(td);
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (SAXException ex1) {
-            ex1.printStackTrace();
         }
     }
 }
