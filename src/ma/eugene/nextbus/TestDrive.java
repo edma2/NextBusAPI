@@ -11,8 +11,8 @@ public class TestDrive extends NextBus {
         super(agency);
     }
 
-    public TestDrive(String agency, String s) throws IOException {
-        super(agency, s);
+    public TestDrive(String agency, String dumpPath) throws IOException {
+        super(agency, dumpPath);
     }
 
     @Override
