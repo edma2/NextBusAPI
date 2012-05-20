@@ -40,8 +40,7 @@ public class TestDrive extends NextBus {
     public static void main(String[] args) {
         try {
             TestDrive td = new TestDrive("actransit");
-            for (Prediction p : td.getPredictionsInRange(300))
-                System.out.println(p);
+            System.out.println(td);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {

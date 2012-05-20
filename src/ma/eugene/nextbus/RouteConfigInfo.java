@@ -15,4 +15,13 @@ public class RouteConfigInfo {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(stopId + "|");
+        sb.append(title + "|");
+        sb.append(latitude + "|");
+        sb.append(longitude);
+        return sb.toString();
+    }
 }

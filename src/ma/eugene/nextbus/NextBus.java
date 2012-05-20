@@ -33,8 +33,7 @@ public abstract class NextBus {
 
     public List<BusStop> getStopsInRange(int radius) {
         List<BusStop> results = new LinkedList<BusStop>();
-        for (int stopId : stops.keySet()) {
-            BusStop bs = stops.get(stopId);
+        for (BusStop bs : stops.values()) {
             if (stopDistance(bs) < radius)
                 results.add(bs);
         }
@@ -49,5 +48,14 @@ public abstract class NextBus {
                 predictions.add(pred);
         }
         return predictions;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (BusStop bs : stops.values())
+            sb.append(bs + "\n");
+        if (sb.charAt(sb.length()-1) == '\n')
+            sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
     }
 }

@@ -36,7 +36,7 @@ public class BusStop {
     }
 
     public String toString() {
-        return getTitle() + "(" + getStopId() + ")";
+        return info.toString();
     }
 
     public List<Prediction> getPredictions() throws IOException, SAXException {
