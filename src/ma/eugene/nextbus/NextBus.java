@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -70,6 +72,19 @@ public abstract class NextBus {
         for (String line : s.split("\n")) {
             BusStop bs = new BusStop(api, line);
             stops.put(bs.getStopId(), bs);
+        }
+    }
+
+    public void dump(String path) throws IOException {
+        writeToFile(new File(path), toString());
+    }
+
+    private void writeToFile(File file, String s) throws IOException {
+        BufferedWriter out = new BufferedWriter(new FileWriter(file));
+        try {
+            out.write(s, 0, s.length());
+        } finally {
+            out.close();
         }
     }
 

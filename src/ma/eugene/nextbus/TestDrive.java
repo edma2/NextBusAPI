@@ -44,7 +44,9 @@ public class TestDrive extends NextBus {
     public static void main(String[] args) {
         try {
             TestDrive td1 = new TestDrive("actransit");
-            System.out.println(td1);
+            td1.dump("td1-stops");
+            TestDrive td2 = new TestDrive("actransit", "td1-stops");
+            System.out.println(td2);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
