@@ -1,18 +1,25 @@
 package ma.eugene.nextbus;
 
 import java.io.IOException;
+import java.io.File;
+
 import org.xml.sax.SAXException;
+import org.json.JSONException;
 
 public class TestDrive extends NextBus {
     private double latitude = 37.873464;
     private double longitude = -122.271481;
 
-    public TestDrive(String agency) throws IOException, SAXException {
+    public TestDrive(String agency) {
         super(agency);
     }
 
+    public TestDrive(File file) throws IOException, JSONException {
+        super(file);
+    }
+
     @Override
-    protected float stopDistance(BusStop bs) {
+    protected float distanceToStop(BusStop bs) {
         return distance(bs.getLatitude(), bs.getLongitude(), latitude,
                 longitude);
     }
@@ -40,15 +47,20 @@ public class TestDrive extends NextBus {
     public static void main(String[] args) {
         try {
             TestDrive td1 = new TestDrive("actransit");
-            td1.getStopsRemote();
-            td1.saveStops("stops");
-            TestDrive td2 = new TestDrive("actransit");
-            td2.getStopsLocal("stops");
+            td1.fetchStops();
+
+            File f = new File("td1.json");
+
+            td1.saveState(f);
+            TestDrive td2 = new TestDrive(f);
+
             System.out.println(td2);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
             ex1.printStackTrace();
+        } catch (JSONException ex2) {
+            ex2.printStackTrace();
         }
     }
 }

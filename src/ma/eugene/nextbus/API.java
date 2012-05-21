@@ -29,6 +29,10 @@ public class API {
         this.agency = agency;
     }
 
+    public String getAgency() {
+        return agency;
+    }
+
     /**
      * Send a "predictions" command for the specified stop and parse the
      * response.

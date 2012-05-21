@@ -11,29 +11,20 @@ import java.util.List;
 import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public abstract class NextBus {
     /** Live XML feed API. */
     private API api;
 
-    /** For mapping stopIds to unique stops. */
-    private HashMap<Integer, BusStop> stops = new HashMap<Integer, BusStop>();
-
     /**
-     * Subclasses should implement this method which returns the distance in
-     * meters to a given BusStop.
-     *
-     * @param bs the BusStop
-     * @return the distance in meters
+     * All BusStops.
+     * Protected access to this data is provided with getStops() and addStop().
      */
-    protected abstract float stopDistance(BusStop bs);
-
-    /**
-     * @param agency the NextBus agency
-     */
-    public NextBus(String agency) {
-        api = new API(agency);
-    }
+    private HashMap<Integer, BusStop> busStops =
+                        new HashMap<Integer, BusStop>();
 
     /**
      * Get all BusStops as an Array.
@@ -41,95 +32,120 @@ public abstract class NextBus {
      * @return array of BusStops
      */
     protected BusStop[] getStops() {
-        return stops.values().toArray(new BusStop[0]);
+        return busStops.values().toArray(new BusStop[0]);
     }
 
     /**
-     * Get string representations of all my BusStops.
-     * Each BusStop is separated by a newline.
+     * Add a BusStop, or replace an existing BusStop with the same stopId.
      *
-     * @return all BusStops as a single String.
+     * @param bs the BusStop
      */
-    private String stringifyStops() {
+    protected void addStop(BusStop bs) {
+        busStops.put(bs.getStopId(), bs);
+    }
+
+    /**
+     * Computes the distance to a given BusStop.
+     * The implementation of this function is left up to the subclass. For
+     * instance, Android provides nice ways to do this with Locations.
+     *
+     * @param bs the BusStop
+     * @return the distance in meters
+     */
+    protected abstract float distanceToStop(BusStop bs);
+
+    /**
+     * Default constructor.
+     * 
+     * @param agency the String identifying the NextBus agency
+     */
+    public NextBus(String agency) {
+        api = new API(agency);
+    }
+
+    /**
+     * File constructor.
+     * Use this method to instantiate a new NextBus instance from a JSON file.
+     *
+     * @param file the file containing whose contents is JSON source string
+     */
+    public NextBus(File file) throws JSONException, IOException {
+        String source = readFromFile(file);
+        JSONObject json = new JSONObject(source);
+        api = new API((String)json.get("agency"));
+        JSONArray jsonStops = (JSONArray)json.get("stops");
+        for (int i = 0; i < jsonStops.length(); i++) {
+            BusStop bs = new BusStop(api, jsonStops.getJSONObject(i));
+            addStop(bs);
+        }
+    }
+
+    /**
+     * Get file contents represented as a String.
+     *
+     * @param file the source File
+     * @return the String representing file contents
+     */
+    private String readFromFile(File file) throws IOException {
         StringBuilder sb = new StringBuilder();
-        for (BusStop bs : stops.values())
-            sb.append(bs + "\n");
-        if (sb.length() > 0)
-            sb.deleteCharAt(sb.length()-1);
+        BufferedReader in = new BufferedReader(new FileReader(file));
+        try {
+            char[] buf = new char[1024];
+            int bytesRead = 0;
+            while ((bytesRead = in.read(buf)) != -1)
+                sb.append(buf, 0, bytesRead);
+        } finally {
+            in.close();
+        }
         return sb.toString();
     }
 
     /**
-     * Save my BusStops to a dump file.
+     * The String representation is the JSON text.
+     * Use this method to export this as a String, possibly writing it to a
+     * file. On error, returns the empty string.
      *
-     * @param pathToDump the path where the dump file should be written
+     * @return the JSON String representing this
      */
-    public void saveStops(String pathToDump) throws IOException {
-        writeToFile(new File(pathToDump), stringifyStops());
-    }
-
-    /**
-     * Query the NextBus server for stops.
-     *
-     * This is much slower and more expensive to call, so you should call
-     * getStopsLocal() unless cold start or cached stops are out of date.
-     */
-    public void getStopsRemote() throws IOException, SAXException {
-        for (String route : api.getRouteList()) {
-            for (RouteConfigInfo info : api.getRouteConfig(route)) {
-                BusStop stop = new BusStop(api, info);
-                stops.put(stop.getStopId(), stop);
-            }
+    public String toString() {
+        try {
+            return toJSON().toString();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+            return "";
         }
     }
 
     /**
-     * Read stops from local dump file.
-     * Correctly loads saved state if the dump file was created by calling
-     * saveStops().
+     * Converts NextBus to JSONObject.
      *
-     * @param pathToDump the path where the dump file exists
+     * @return the corresponding JSONObject
      */
-    public void getStopsLocal(String pathToDump) throws IOException {
-        File dumpFile = new File(pathToDump);
-        String s = readFromFile(dumpFile);
-        for (String line : s.split("\n")) {
-            BusStop bs = new BusStop(api, line);
-            stops.put(bs.getStopId(), bs);
-        }
+    private JSONObject toJSON() throws JSONException {
+        JSONArray stops = new JSONArray();
+        for (BusStop bs : getStops())
+            stops.put(bs.toJSON());
+        JSONObject json = new JSONObject();
+        json.put("agency", api.getAgency());
+        json.put("stops", stops);
+        return json;
     }
 
     /**
-     * Get all BusStops within range.
+     * Save the state to a JSON file.
      *
-     * @param radius distance in meters
-     * @return all BusStops within range in meters.
+     * @param file the File to be written to
      */
-    public List<BusStop> getStopsInRange(int radius) {
-        List<BusStop> results = new LinkedList<BusStop>();
-        for (BusStop bs : stops.values()) {
-            if (stopDistance(bs) < radius)
-                results.add(bs);
-        }
-        return results;
+    public void saveState(File file) throws IOException, JSONException {
+        writeToFile(file, toString());
     }
 
     /**
-     * Get all Predictions within range.
+     * Write the String to the file.
      *
-     * @param radius distance in meters
-     * @return all Predictions arriving at stops within range in meters.
+     * @param file the File to be written to
+     * @param s the String to be written.
      */
-    public List<Prediction> getPredictionsInRange(int radius)
-                                    throws IOException, SAXException {
-        List<Prediction> predictions = new LinkedList<Prediction>();
-        for (BusStop bs : getStopsInRange(radius)) {
-            for (Prediction pred : bs.getPredictions())
-                predictions.add(pred);
-        }
-        return predictions;
-    }
-
     private void writeToFile(File file, String s) throws IOException {
         BufferedWriter out = new BufferedWriter(new FileWriter(file));
         try {
@@ -139,21 +155,48 @@ public abstract class NextBus {
         }
     }
 
-    private String readFromFile(File file) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader in = new BufferedReader(new FileReader(file));
-        try {
-            char[] buf = new char[1024];
-            int bytesRead = 0;
-            while ((bytesRead = in.read(buf)) >= 0)
-                sb.append(buf, 0, bytesRead);
-        } finally {
-            in.close();
+    /**
+     * Query the NextBus server for stops.
+     * This is slow and expensive because it requires sending many HTTP
+     * requests to the NextBus server.
+     */
+    public void fetchStops() throws IOException, SAXException {
+        for (String route : api.getRouteList()) {
+            for (RouteConfigInfo info : api.getRouteConfig(route)) {
+                BusStop bs = new BusStop(api, info);
+                addStop(bs);
+            }
         }
-        return sb.toString();
     }
 
-    public String toString() {
-        return stringifyStops();
+    /**
+     * All BusStops within range.
+     *
+     * @param radius distance in meters
+     * @return all BusStops within range in meters.
+     */
+    public List<BusStop> getStopsInRange(int radius) {
+        List<BusStop> results = new LinkedList<BusStop>();
+        for (BusStop bs : getStops()) {
+            if (distanceToStop(bs) < radius)
+                results.add(bs);
+        }
+        return results;
+    }
+
+    /**
+     * All Predictions within radius.
+     *
+     * @param radius distance in meters
+     * @return all Predictions arriving at stops within range in meters.
+     */
+    public List<Prediction> getPredictionsInRange(int radius)
+                            throws IOException, SAXException {
+        List<Prediction> predictions = new LinkedList<Prediction>();
+        for (BusStop bs : getStopsInRange(radius)) {
+            for (Prediction pred : bs.getPredictions())
+                predictions.add(pred);
+        }
+        return predictions;
     }
 }
