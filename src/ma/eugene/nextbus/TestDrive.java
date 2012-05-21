@@ -50,7 +50,7 @@ public class TestDrive extends NextBus {
 
             TestDrive td2 = new TestDrive("blah");
             td2.loadState(f);
-            System.out.println(td2);
+            td2.storeState(new File("td2.json"));
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
