@@ -121,7 +121,7 @@ public abstract class NextBus {
      */
     public String toString() {
         try {
-            return toJSON().toString();
+            return toJSON().toString(2);
         } catch (JSONException ex) {
             ex.printStackTrace();
             return "";
