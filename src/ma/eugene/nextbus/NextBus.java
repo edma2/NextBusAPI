@@ -101,6 +101,15 @@ public abstract class NextBus {
     }
 
     /**
+     * Save the state to a JSON file.
+     *
+     * @param file the File to be written to
+     */
+    public void saveState(File file) throws IOException, JSONException {
+        writeToFile(file, toString());
+    }
+
+    /**
      * The String representation is the JSON text.
      * Use this method to export this as a String, possibly writing it to a
      * file. On error, returns the empty string.
@@ -129,15 +138,6 @@ public abstract class NextBus {
         json.put("agency", api.getAgency());
         json.put("stops", stops);
         return json;
-    }
-
-    /**
-     * Save the state to a JSON file.
-     *
-     * @param file the File to be written to
-     */
-    public void saveState(File file) throws IOException, JSONException {
-        writeToFile(file, toString());
     }
 
     /**
