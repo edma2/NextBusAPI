@@ -51,15 +51,6 @@ public class BusStop {
         return info.longitude;
     }
 
-    public String toString() {
-        try {
-            return toJSON().toString();
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-            return "";
-        }
-    }
-
     public List<Prediction> getPredictions() throws IOException, SAXException {
         List<Prediction> predictions = new LinkedList<Prediction>();
         for (PredictionsInfo info : api.getPredictions(getStopId()))
