@@ -11,10 +11,6 @@ public class TestDrive extends NextBus {
         super(agency);
     }
 
-    public TestDrive(String agency, String dumpPath) throws IOException {
-        super(agency, dumpPath);
-    }
-
     @Override
     protected float stopDistance(BusStop bs) {
         return distance(bs.getLatitude(), bs.getLongitude(), latitude,
@@ -44,8 +40,10 @@ public class TestDrive extends NextBus {
     public static void main(String[] args) {
         try {
             TestDrive td1 = new TestDrive("actransit");
-            td1.dump("td1-stops");
-            TestDrive td2 = new TestDrive("actransit", "td1-stops");
+            td1.getStopsRemote();
+            td1.saveStops("stops");
+            TestDrive td2 = new TestDrive("actransit");
+            td2.getStopsLocal("stops");
             System.out.println(td2);
         } catch (IOException ex) {
             ex.printStackTrace();
