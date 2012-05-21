@@ -40,7 +40,7 @@ public abstract class NextBus {
      *
      * @return array of BusStops
      */
-    public BusStop[] getStops() {
+    protected BusStop[] getStops() {
         return stops.values().toArray(new BusStop[0]);
     }
 
