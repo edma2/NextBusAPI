@@ -64,12 +64,15 @@ public abstract class NextBus {
     }
 
     /**
-     * File constructor.
-     * Use this method to instantiate a new NextBus instance from a JSON file.
+     * Load state from a JSON file.
+     * Use this method to populate busStops using local JSON storage.
+     * Calling this method will clear existing busStops and instantiate a new
+     * API with agency matching that specified in @param file.
      *
      * @param file the file containing whose contents is JSON source string
      */
-    public NextBus(File file) throws JSONException, IOException {
+    public void loadState(File file) throws JSONException, IOException {
+        busStops = new HashMap<Integer, BusStop>();
         String source = readFromFile(file);
         JSONObject json = new JSONObject(source);
         api = new API((String)json.get("agency"));

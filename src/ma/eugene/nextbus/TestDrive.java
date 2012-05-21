@@ -14,10 +14,6 @@ public class TestDrive extends NextBus {
         super(agency);
     }
 
-    public TestDrive(File file) throws IOException, JSONException {
-        super(file);
-    }
-
     @Override
     protected float distanceToStop(BusStop bs) {
         return distance(bs.getLatitude(), bs.getLongitude(), latitude,
@@ -46,14 +42,14 @@ public class TestDrive extends NextBus {
 
     public static void main(String[] args) {
         try {
-            TestDrive td1 = new TestDrive("actransit");
-            td1.fetchStops();
-
             File f = new File("td1.json");
 
+            TestDrive td1 = new TestDrive("actransit");
+            td1.fetchStops();
             td1.saveState(f);
-            TestDrive td2 = new TestDrive(f);
 
+            TestDrive td2 = new TestDrive("blah");
+            td2.loadState(f);
             System.out.println(td2);
         } catch (IOException ex) {
             ex.printStackTrace();
