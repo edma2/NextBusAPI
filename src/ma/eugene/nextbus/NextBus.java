@@ -36,11 +36,12 @@ public abstract class NextBus {
     }
 
     /**
-     * A set of lines, where each line contains a BusStop.
+     * Get string representations of all my BusStops.
+     * Each BusStop is separated by a newline.
      *
-     * @return the representation of this NextBus instance as a String.
+     * @return all BusStops as a single String.
      */
-    public String toString() {
+    private String stringifyStops() {
         StringBuilder sb = new StringBuilder();
         for (BusStop bs : stops.values())
             sb.append(bs + "\n");
@@ -55,7 +56,7 @@ public abstract class NextBus {
      * @param pathToDump the path where the dump file should be written
      */
     public void saveStops(String pathToDump) throws IOException {
-        writeToFile(new File(pathToDump), toString());
+        writeToFile(new File(pathToDump), stringifyStops());
     }
 
     /**
@@ -141,5 +142,9 @@ public abstract class NextBus {
             in.close();
         }
         return sb.toString();
+    }
+
+    public String toString() {
+        return stringifyStops();
     }
 }
