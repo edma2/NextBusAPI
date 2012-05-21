@@ -31,7 +31,7 @@ public abstract class NextBus {
     /**
      * @param agency the NextBus agency
      */
-    public NextBus(String agency) throws IOException, SAXException {
+    public NextBus(String agency) {
         api = new API(agency);
     }
 
