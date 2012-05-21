@@ -36,6 +36,15 @@ public abstract class NextBus {
     }
 
     /**
+     * Get all BusStops as an Array.
+     *
+     * @return array of BusStops
+     */
+    public BusStop[] getStops() {
+        return stops.values().toArray(new BusStop[0]);
+    }
+
+    /**
      * Get string representations of all my BusStops.
      * Each BusStop is separated by a newline.
      *
