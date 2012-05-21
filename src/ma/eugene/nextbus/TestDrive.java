@@ -46,7 +46,7 @@ public class TestDrive extends NextBus {
 
             TestDrive td1 = new TestDrive("actransit");
             td1.fetchStops();
-            td1.saveState(f);
+            td1.storeState(f);
 
             TestDrive td2 = new TestDrive("blah");
             td2.loadState(f);

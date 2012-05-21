@@ -108,7 +108,7 @@ public abstract class NextBus {
      *
      * @param file the File to be written to
      */
-    public void saveState(File file) throws IOException, JSONException {
+    public void storeState(File file) throws IOException, JSONException {
         writeToFile(file, toString());
     }
 
