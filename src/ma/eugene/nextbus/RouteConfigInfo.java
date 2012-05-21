@@ -9,11 +9,11 @@ public class RouteConfigInfo {
     public double longitude;
     public double latitude;
 
-    public RouteConfigInfo(String title, int stopId, double longitude,
-                                double latitude) {
+    public RouteConfigInfo(String title, int stopId, double latitude,
+                                double longitude) {
         this.title = title;
         this.stopId = stopId;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
     }
 }
