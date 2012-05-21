@@ -50,7 +50,7 @@ public abstract class NextBus {
     }
 
     /**
-     * Save my representation as a String to a file.
+     * Save my BusStops to a dump file.
      *
      * @param pathToDump the path where the dump file should be written
      */
@@ -75,6 +75,8 @@ public abstract class NextBus {
 
     /**
      * Read stops from local dump file.
+     * Correctly loads saved state if the dump file was created by calling
+     * saveStops().
      *
      * @param pathToDump the path where the dump file exists
      */
