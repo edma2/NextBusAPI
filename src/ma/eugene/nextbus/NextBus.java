@@ -163,7 +163,7 @@ public abstract class NextBus {
      * This is slow and expensive because it requires sending many HTTP
      * requests to the NextBus server.
      */
-    public void fetchStops() throws IOException, SAXException {
+    public void fetchState() throws IOException, SAXException {
         for (String route : api.getRouteList()) {
             for (RouteConfigInfo info : api.getRouteConfig(route)) {
                 BusStop bs = new BusStop(api, info);

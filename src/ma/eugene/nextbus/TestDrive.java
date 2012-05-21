@@ -45,7 +45,7 @@ public class TestDrive extends NextBus {
             File f = new File("td1.json");
 
             TestDrive td1 = new TestDrive("actransit");
-            td1.fetchStops();
+            td1.fetchState();
             td1.storeState(f);
 
             TestDrive td2 = new TestDrive("blah");
