@@ -26,6 +26,10 @@ public class Prediction {
         return bs.getStopId();
     }
 
+    public String getStopTitle() {
+        return bs.getTitle();
+    }
+
     private List<Integer> getTimes() {
         return info.times;
     }
