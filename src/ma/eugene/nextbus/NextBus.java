@@ -210,7 +210,7 @@ public abstract class NextBus {
      *
      * @param predictions the predictions to be sorted
      */
-    public void sortPredictions(List<Prediction> predictions) {
+    public void sortByDistance(List<Prediction> predictions) {
         Collections.sort(predictions, new Comparator<Prediction>() {
             public int compare(Prediction o1, Prediction o2) {
                 return (int)(distanceToStop(o1.bs) - distanceToStop(o2.bs));
