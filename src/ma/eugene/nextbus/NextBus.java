@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -201,5 +203,18 @@ public abstract class NextBus {
                 predictions.add(pred);
         }
         return predictions;
+    }
+
+    /**
+     * Sort predictions in place by distance.
+     *
+     * @param predictions the predictions to be sorted
+     */
+    public void sortPredictions(List<Prediction> predictions) {
+        Collections.sort(predictions, new Comparator<Prediction>() {
+            public int compare(Prediction o1, Prediction o2) {
+                return (int)(distanceToStop(o1.bs) - distanceToStop(o2.bs));
+            }
+        });
     }
 }
