@@ -6,7 +6,7 @@ import java.util.List;
 import org.xml.sax.SAXException;
 
 public class Prediction {
-    private BusStop bs;
+    BusStop bs;
     private PredictionsInfo info;
 
     public Prediction(BusStop bs, PredictionsInfo info) {
