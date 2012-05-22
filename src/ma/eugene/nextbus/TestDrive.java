@@ -42,21 +42,14 @@ public class TestDrive extends NextBus {
 
     public static void main(String[] args) {
         try {
-            File f = new File("td1.json");
-
-            TestDrive td1 = new TestDrive("actransit");
-            td1.fetchState();
-            td1.storeState(f);
-
-            TestDrive td2 = new TestDrive("blah");
-            td2.loadState(f);
-            td2.storeState(new File("td2.json"));
+            TestDrive td = new TestDrive("actransit");
+            td.fetchState();
+            for (Prediction pred : td.getPredictionsInRange(300))
+                System.out.println(pred.getTimesAsString());
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
             ex1.printStackTrace();
-        } catch (JSONException ex2) {
-            ex2.printStackTrace();
         }
     }
 }
