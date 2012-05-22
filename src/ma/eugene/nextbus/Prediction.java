@@ -26,16 +26,29 @@ public class Prediction {
         return bs.getStopId();
     }
 
-    public String toString() {
+    private List<Integer> getTimes() {
+        return info.times;
+    }
+
+    private <T> String join(String sep, T[] items) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int time : getTimes())
-            sb.append(time);
-        sb.append("]");
+        for (int i = 0; i < items.length; i++) {
+            sb.append(items[i]);
+            if (i < items.length-1)
+                sb.append(sep);
+        }
         return sb.toString();
     }
 
-    public List<Integer> getTimes() {
-        return info.times;
+    public String getTimesAsString() {
+        return join(", ", getTimesInMinutes());
+    }
+
+    private Integer[] getTimesInMinutes() {
+        Integer[] times = new Integer[getTimes().size()];
+        int i = 0;
+        for(int seconds : getTimes())
+            times[i++] = seconds/60;
+        return times;
     }
 }
