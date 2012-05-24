@@ -1,0 +1,119 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Stack;
+import java.util.EmptyStackException;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+public class Route extends API {
+    private String title; 
+    private List<Stop> stops = new LinkedList<Stop>();
+    private Map<String, List<Stop>> paths = new HashMap<String, List<Stop>>();
+
+    private class Stop {
+        int stopId;
+        String title;
+        double latitude;
+        double longitude;
+
+        public Stop(int stopId, String title, double latitude, double longitude) {
+            this.stopId = stopId;
+            this.title = title;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+    }
+
+    public Route(String agency, String title) {
+        super(agency);
+        this.title = title;
+        handler = new DefaultHandler() {
+            Map<String, Stop> stops = new HashMap<String, Stop>();
+            Stack<String> parentTags = new Stack<String>();
+            String prevDirection = "";
+
+            public void startElement(
+                    java.lang.String uri,
+                    java.lang.String localName,
+                    java.lang.String qName,
+                    Attributes attributes) throws SAXException {
+                String tag = qName; // TODO: qName or localName?
+                String parentTag;
+                try {
+                    parentTag = parentTags.peek();
+                } catch (EmptyStackException ex) {
+                    parentTag = "";
+                }
+                if (parentTag.equals("route") && tag.equals("stop")) {
+                    // <body>
+                    //   <route>
+                    //     <stop>
+                    String stopId = attributes.getValue("stopId");
+                    Stop stop = new
+                        Stop(stopId == null ? 0 : Integer.parseInt(stopId),
+                                attributes.getValue("title"),
+                                Double.parseDouble(attributes.getValue("lon")),
+                                Double.parseDouble(attributes.getValue("lat")));
+                    String stopTag = attributes.getValue("tag");
+                    Route.this.stops.add(stop);
+                    stops.put(stopTag, stop);
+                } else if (parentTag.equals("route") && tag.equals("direction")) {
+                    // <body>
+                    //   <route>
+                    //     <direction>
+                    String direction = attributes.getValue("title");
+                    paths.put(direction, new LinkedList<Stop>());
+                    prevDirection = direction;
+                } else if (parentTag.equals("direction") && tag.equals("stop")) {
+                    // <body>
+                    //   <route>
+                    //     <direction>
+                    //       <stop>
+                    String stopTag = attributes.getValue("tag");
+                    Stop stop = stops.get(stopTag);
+                    paths.get(prevDirection).add(stop);
+                }
+                parentTags.push(tag);
+            }
+            public void endElement(
+                    java.lang.String uri,
+                    java.lang.String localName,
+                    java.lang.String qName) throws SAXException {
+                parentTags.pop();
+            }
+        };
+    }
+
+    public void update() {
+        try {
+            stops.clear();
+            paths.clear();
+            StringBuilder sb = new StringBuilder(URL + "?");
+            sb.append("command=routeConfig");
+            sb.append("&a=" + agency);
+            sb.append("&r=" + title);
+            String url = sb.toString();
+            XMLParse(url);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (SAXException ex1) {
+            ex1.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Route route = new Route("actransit", "B");
+        route.update();
+        for (String direction : route.paths.keySet()) {
+            System.out.println(direction);
+            System.out.println("=============");
+            for (Stop s : route.paths.get(direction))
+                System.out.println(s.title);
+        }
+    }
+}
