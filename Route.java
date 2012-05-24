@@ -32,7 +32,10 @@ public class Route extends API {
     public Route(String agency, String title) {
         super(agency);
         this.title = title;
-        handler = new DefaultHandler() {
+    }
+
+    protected DefaultHandler getHandler() {
+        return new DefaultHandler() {
             Map<String, Stop> stops = new HashMap<String, Stop>();
             Stack<String> parentTags = new Stack<String>();
             String prevDirection = "";
@@ -80,6 +83,7 @@ public class Route extends API {
                 }
                 parentTags.push(tag);
             }
+
             public void endElement(
                     java.lang.String uri,
                     java.lang.String localName,

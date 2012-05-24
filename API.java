@@ -16,7 +16,6 @@ public abstract class API {
     protected final String URL =
         "http://webservices.nextbus.com/service/publicXMLFeed";
     protected String agency;
-    protected DefaultHandler handler = new DefaultHandler();
 
     public API(String agency) {
         this.agency = agency;
@@ -24,13 +23,15 @@ public abstract class API {
 
     public abstract void update();
 
+    protected abstract DefaultHandler getHandler();
+
     protected void XMLParse(String url) throws SAXException, IOException {
         XMLParse(XMLRetrieve(url));
     }
 
     private void XMLParse(Reader source) throws SAXException, IOException {
         XMLReader reader = XMLReaderFactory.createXMLReader();
-        reader.setContentHandler(handler);
+        reader.setContentHandler(getHandler());
         reader.parse(new InputSource(source));
     }
 
