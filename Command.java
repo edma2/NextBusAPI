@@ -12,16 +12,16 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.InputSource;
 
-public abstract class API {
+public abstract class Command {
     protected final String URL =
         "http://webservices.nextbus.com/service/publicXMLFeed";
     protected String agency;
 
-    public API(String agency) {
+    public Command(String agency) {
         this.agency = agency;
     }
 
-    public abstract void update();
+    public abstract void execute();
 
     protected abstract DefaultHandler getHandler();
 

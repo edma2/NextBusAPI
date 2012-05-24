@@ -6,7 +6,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class RouteList extends API {
+public class RouteList extends Command {
     private List<String> routes = new LinkedList<String>();
 
     public RouteList(String agency) {
@@ -29,7 +29,7 @@ public class RouteList extends API {
         };
     }
 
-    public void update() {
+    public void execute() {
         try {
             routes.clear();
             StringBuilder sb = new StringBuilder(URL + "?");

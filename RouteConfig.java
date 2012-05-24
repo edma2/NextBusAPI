@@ -10,7 +10,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class Route extends API {
+public class RouteConfig extends Command {
     private String title; 
     private List<Stop> stops = new LinkedList<Stop>();
     private Map<String, List<Stop>> paths = new HashMap<String, List<Stop>>();
@@ -29,7 +29,7 @@ public class Route extends API {
         }
     }
 
-    public Route(String agency, String title) {
+    public RouteConfig(String agency, String title) {
         super(agency);
         this.title = title;
     }
@@ -63,7 +63,7 @@ public class Route extends API {
                                 Double.parseDouble(attributes.getValue("lon")),
                                 Double.parseDouble(attributes.getValue("lat")));
                     String stopTag = attributes.getValue("tag");
-                    Route.this.stops.add(stop);
+                    RouteConfig.this.stops.add(stop);
                     stops.put(stopTag, stop);
                 } else if (parentTag.equals("route") && tag.equals("direction")) {
                     // <body>
@@ -93,7 +93,7 @@ public class Route extends API {
         };
     }
 
-    public void update() {
+    public void execute() {
         try {
             stops.clear();
             paths.clear();
@@ -111,12 +111,12 @@ public class Route extends API {
     }
 
     public static void main(String[] args) {
-        Route route = new Route("actransit", "B");
-        route.update();
-        for (String direction : route.paths.keySet()) {
+        RouteConfig rc = new RouteConfig("actransit", "B");
+        rc.execute();
+        for (String direction : rc.paths.keySet()) {
             System.out.println(direction);
             System.out.println("=============");
-            for (Stop s : route.paths.get(direction))
+            for (Stop s : rc.paths.get(direction))
                 System.out.println(s.title);
         }
     }
