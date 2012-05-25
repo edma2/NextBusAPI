@@ -13,23 +13,33 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.InputSource;
 
 public abstract class Command {
-    protected final String URL =
+    private final String URL =
         "http://webservices.nextbus.com/service/publicXMLFeed";
-    protected String agency;
+    private String agency;
 
     public Command(String agency) {
         this.agency = agency;
     }
 
-    public abstract void execute();
+    /**
+     * TODO: write custom Exception class
+     */
+    public void execute() {
+        try {
+            parseXML(getSource(getURL()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (SAXException ex1) {
+            ex1.printStackTrace();
+        }
+    }
 
     protected abstract DefaultHandler getHandler();
 
-    protected void XMLParse(String url) throws SAXException, IOException {
-        XMLParse(XMLRetrieve(url));
-    }
+    protected String getURL() { return URL; }
+    protected String getAgency() { return agency; }
 
-    private void XMLParse(Reader source) throws SAXException, IOException {
+    private void parseXML(Reader source) throws SAXException, IOException {
         XMLReader reader = XMLReaderFactory.createXMLReader();
         reader.setContentHandler(getHandler());
         reader.parse(new InputSource(source));
@@ -40,7 +50,7 @@ public abstract class Command {
      * parameters. The data received is assumed to be encoded as UTF-8 by
      * default, and a Reader pointing to it is returned.
      */
-    private Reader XMLRetrieve(String url) throws IOException {
+    private Reader getSource(String url) throws IOException {
         HttpURLConnection conn =
                 (HttpURLConnection)new URL(url).openConnection();
         conn.setRequestMethod("GET");

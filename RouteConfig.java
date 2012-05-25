@@ -34,6 +34,16 @@ public class RouteConfig extends Command {
         this.title = title;
     }
 
+    @Override
+    protected String getURL() {
+        StringBuilder sb = new StringBuilder(super.getURL());
+        sb.append("?command=routeConfig");
+        sb.append("&a=" + getAgency());
+        sb.append("&r=" + title);
+        return sb.toString();
+    }
+
+    @Override
     protected DefaultHandler getHandler() {
         return new DefaultHandler() {
             Map<String, Stop> stops = new HashMap<String, Stop>();
@@ -52,7 +62,11 @@ public class RouteConfig extends Command {
                 } catch (EmptyStackException ex) {
                     parentTag = "";
                 }
-                if (parentTag.equals("route") && tag.equals("stop")) {
+                if (tag.equals("body")) {
+                    // <body>
+                    stops.clear();
+                    paths.clear();
+                } else if (parentTag.equals("route") && tag.equals("stop")) {
                     // <body>
                     //   <route>
                     //     <stop>
@@ -91,23 +105,6 @@ public class RouteConfig extends Command {
                 parentTags.pop();
             }
         };
-    }
-
-    public void execute() {
-        try {
-            stops.clear();
-            paths.clear();
-            StringBuilder sb = new StringBuilder(URL + "?");
-            sb.append("command=routeConfig");
-            sb.append("&a=" + agency);
-            sb.append("&r=" + title);
-            String url = sb.toString();
-            XMLParse(url);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (SAXException ex1) {
-            ex1.printStackTrace();
-        }
     }
 
     public static void main(String[] args) {
