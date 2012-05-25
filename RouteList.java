@@ -13,6 +13,15 @@ public class RouteList extends Command {
         super(agency);
     }
 
+    @Override
+    protected String getURL() {
+        StringBuilder sb = new StringBuilder(super.getURL());
+        sb.append("?command=routeList");
+        sb.append("&a=" + getAgency());
+        return sb.toString();
+    }
+
+    @Override
     protected DefaultHandler getHandler() {
         return new DefaultHandler() {
             public void startElement(
@@ -21,26 +30,13 @@ public class RouteList extends Command {
                     java.lang.String qName,
                     Attributes attributes) throws SAXException {
                 String tag = qName;
-                if (tag.equals("route")) {
+                if (tag.equals("body")) {
+                    routes.clear();
+                } else if (tag.equals("route")) {
                     String route = attributes.getValue("title");
                     routes.add(route);
                 }
             }
         };
-    }
-
-    public void execute() {
-        try {
-            routes.clear();
-            StringBuilder sb = new StringBuilder(URL + "?");
-            sb.append("command=routeList");
-            sb.append("&a=" + agency);
-            String url = sb.toString();
-            XMLParse(url);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (SAXException ex1) {
-            ex1.printStackTrace();
-        }
     }
 }
