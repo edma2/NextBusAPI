@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class RouteConfig extends Command {
         double latitude;
         double longitude;
 
-        public Stop(int stopId, String title, double latitude, double longitude) {
+        Stop(int stopId, String title, double latitude, double longitude) {
             this.stopId = stopId;
             this.title = title;
             this.latitude = latitude;
