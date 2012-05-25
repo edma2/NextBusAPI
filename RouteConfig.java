@@ -3,12 +3,9 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Stack;
-import java.util.EmptyStackException;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 public class RouteConfig extends Command {
     private String title; 
@@ -44,19 +41,10 @@ public class RouteConfig extends Command {
     }
 
     @Override
-    protected DefaultHandler getHandler() {
-        return new DefaultHandler() {
+    protected NextBusHandler getHandler() {
+        return new NextBusHandler() {
             Map<String, Stop> stops = new HashMap<String, Stop>();
-            Stack<String> tags = new Stack<String>();
             String prevDirection = "";
-
-            private String getLastTag() {
-                try {
-                    return tags.peek();
-                } catch (EmptyStackException ex) {
-                    return "";
-                }
-            }
 
             public void startElement(
                     java.lang.String uri,
@@ -98,20 +86,7 @@ public class RouteConfig extends Command {
                     Stop stop = stops.get(stopTag);
                     paths.get(prevDirection).add(stop);
                 }
-                tags.push(tag);
-            }
-
-            public void characters(char[] ch, int start, int length)
-                            throws SAXException {
-                if (getLastTag().equals("Error"))
-                    throw new SAXException(new String(ch, start, length));
-            }
-
-            public void endElement(
-                    java.lang.String uri,
-                    java.lang.String localName,
-                    java.lang.String qName) throws SAXException {
-                tags.pop();
+                pushTag(tag);
             }
         };
     }

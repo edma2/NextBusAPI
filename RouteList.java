@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 public class RouteList extends Command {
     private List<String> routes = new LinkedList<String>();
@@ -22,8 +21,8 @@ public class RouteList extends Command {
     }
 
     @Override
-    protected DefaultHandler getHandler() {
-        return new DefaultHandler() {
+    protected NextBusHandler getHandler() {
+        return new NextBusHandler() {
             public void startElement(
                     java.lang.String uri,
                     java.lang.String localName,

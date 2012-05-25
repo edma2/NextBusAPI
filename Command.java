@@ -9,7 +9,6 @@ import java.io.Reader;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLReaderFactory;
-import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.InputSource;
 
 public abstract class Command {
@@ -34,7 +33,7 @@ public abstract class Command {
         }
     }
 
-    protected abstract DefaultHandler getHandler();
+    protected abstract NextBusHandler getHandler();
 
     protected String getURL() { return URL; }
     protected String getAgency() { return agency; }
