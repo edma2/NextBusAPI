@@ -47,8 +47,16 @@ public class RouteConfig extends Command {
     protected DefaultHandler getHandler() {
         return new DefaultHandler() {
             Map<String, Stop> stops = new HashMap<String, Stop>();
-            Stack<String> parentTags = new Stack<String>();
+            Stack<String> tags = new Stack<String>();
             String prevDirection = "";
+
+            private String getLastTag() {
+                try {
+                    return tags.peek();
+                } catch (EmptyStackException ex) {
+                    return "";
+                }
+            }
 
             public void startElement(
                     java.lang.String uri,
@@ -56,12 +64,7 @@ public class RouteConfig extends Command {
                     java.lang.String qName,
                     Attributes attributes) throws SAXException {
                 String tag = qName; // TODO: qName or localName?
-                String parentTag;
-                try {
-                    parentTag = parentTags.peek();
-                } catch (EmptyStackException ex) {
-                    parentTag = "";
-                }
+                String parentTag = getLastTag();
                 if (tag.equals("body")) {
                     // <body>
                     stops.clear();
@@ -95,14 +98,20 @@ public class RouteConfig extends Command {
                     Stop stop = stops.get(stopTag);
                     paths.get(prevDirection).add(stop);
                 }
-                parentTags.push(tag);
+                tags.push(tag);
+            }
+
+            public void characters(char[] ch, int start, int length)
+                            throws SAXException {
+                if (getLastTag().equals("Error"))
+                    throw new SAXException(new String(ch, start, length));
             }
 
             public void endElement(
                     java.lang.String uri,
                     java.lang.String localName,
                     java.lang.String qName) throws SAXException {
-                parentTags.pop();
+                tags.pop();
             }
         };
     }
