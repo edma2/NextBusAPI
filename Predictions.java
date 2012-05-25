@@ -55,7 +55,6 @@ public class Predictions extends Command {
                         Integer.parseInt(attributes.getValue("minutes"));
                     predictions.get(dir).add(minutes);
                 }
-                pushTag(tag);
             }
         };
     }
