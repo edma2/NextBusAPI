@@ -11,30 +11,6 @@ public class RouteConfig extends Command {
     private Map<Direction, List<Stop>> paths =
                 new HashMap<Direction, List<Stop>>();
 
-    class Stop {
-        String title;
-        String tag;
-        double latitude;
-        double longitude;
-
-        Stop(String tag, String title, double latitude, double longitude) {
-            this.tag = tag;
-            this.title = title;
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-    }
-
-    class Direction {
-        String tag;
-        String title;
-
-        Direction(String tag, String title) {
-            this.tag = tag;
-            this.title = title;
-        }
-    }
-
     public RouteConfig(String agency, String routeTag) {
         super(agency);
         this.routeTag = routeTag;
