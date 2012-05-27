@@ -7,20 +7,28 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class Predictions extends Command {
-    private int stopId;
-    private String routeTag = null;
-    // Direction -> [ETAs]
-    private Map<String, List<Integer>> predictions =
-            new HashMap<String, List<Integer>>();
+    private List<Integer> times = new LinkedList<Integer>();
+    private String routeTag;
+    private String dirTag;
+    private String stopTag;
 
-    public Predictions(String agency, int stopId) {
+    public Predictions(String agency, String routeTag, String dirTag,
+                            String stopTag) {
         super(agency);
-        this.stopId = stopId;
+        this.routeTag = routeTag;
+        this.dirTag = dirTag;
+        this.stopTag = stopTag;
     }
 
-    public Predictions(String agency, String routeTag, int stopId) {
-        this(agency, stopId);
-        this.routeTag = routeTag;
+    public int[] getTimes() {
+        return toIntArray(times);
+    }
+
+    private int[] toIntArray(List<Integer> list){
+        int[] ret = new int[list.size()];
+        for(int i = 0;i < ret.length;i++)
+            ret[i] = list.get(i);
+        return ret;
     }
 
     @Override
@@ -28,9 +36,9 @@ public class Predictions extends Command {
         StringBuilder sb = new StringBuilder(super.getURL());
         sb.append("?command=predictions");
         sb.append("&a=" + getAgency());
-        sb.append("&stopId=" + stopId);
-        if (routeTag != null)
-            sb.append("&routeTag=" + routeTag);
+        sb.append("&r=" + routeTag);
+        sb.append("&d=" + dirTag);
+        sb.append("&s=" + stopTag);
         return sb.toString();
     }
 
@@ -39,21 +47,13 @@ public class Predictions extends Command {
         return new NextBusHandler() {
             private String dir = "";
 
-            public void startElement(
-                    java.lang.String uri,
-                    java.lang.String localName,
-                    java.lang.String qName,
-                    Attributes attributes) throws SAXException {
-                String tag = qName;
+            public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body")) {
-                    predictions.clear();
-                } else if (tag.equals("direction")) {
-                    dir = attributes.getValue("direction");
-                    predictions.put(dir, new LinkedList<Integer>());
+                    times.clear();
                 } else if (tag.equals("prediction")) {
                     int minutes =
                         Integer.parseInt(attributes.getValue("minutes"));
-                    predictions.get(dir).add(minutes);
+                    times.add(minutes);
                 }
             }
         };

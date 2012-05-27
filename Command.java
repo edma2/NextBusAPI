@@ -25,7 +25,7 @@ public abstract class Command {
      */
     public void execute() {
         try {
-            parseXML(getSource(getURL()));
+            parseXML(getXML(getURL()));
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SAXException ex1) {
@@ -49,7 +49,7 @@ public abstract class Command {
      * parameters. The data received is assumed to be encoded as UTF-8 by
      * default, and a Reader pointing to it is returned.
      */
-    private Reader getSource(String url) throws IOException {
+    private Reader getXML(String url) throws IOException {
         HttpURLConnection conn =
                 (HttpURLConnection)new URL(url).openConnection();
         conn.setRequestMethod("GET");

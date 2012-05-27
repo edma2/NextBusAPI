@@ -5,7 +5,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class RouteList extends Command {
-    private List<String> routes = new LinkedList<String>();
+    private List<String> routeTags = new LinkedList<String>();
 
     public RouteList(String agency) {
         super(agency);
@@ -22,18 +22,11 @@ public class RouteList extends Command {
     @Override
     protected NextBusHandler getHandler() {
         return new NextBusHandler() {
-            public void startElement(
-                    java.lang.String uri,
-                    java.lang.String localName,
-                    java.lang.String qName,
-                    Attributes attributes) throws SAXException {
-                String tag = qName;
-                if (tag.equals("body")) {
-                    routes.clear();
-                } else if (tag.equals("route")) {
-                    String route = attributes.getValue("title");
-                    routes.add(route);
-                }
+            public void handleElement(String tag, Attributes attributes) {
+                if (tag.equals("body"))
+                    routeTags.clear();
+                else if (tag.equals("route"))
+                    routeTags.add(attributes.getValue("tag"));
             }
         };
     }

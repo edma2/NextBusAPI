@@ -5,7 +5,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class NextBusHandler extends DefaultHandler {        
+public abstract class NextBusHandler extends DefaultHandler {
     private Stack<String> tags = new Stack<String>();
 
     protected String getLastTag() {
@@ -16,8 +16,12 @@ public class NextBusHandler extends DefaultHandler {
         }
     }
 
-    protected void pushTag(String tag) {
-        tags.push(tag);
+    protected abstract void handleElement(String tag, Attributes attributes);
+
+    public void startElement(String uri, String localName, String qName,
+            Attributes attributes) throws SAXException {
+        handleElement(qName, attributes);
+        tags.push(qName);
     }
 
     public void characters(char[] ch, int start, int length)
