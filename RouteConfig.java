@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 
 public class RouteConfig extends Command {
     private String routeTag; 

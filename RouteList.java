@@ -2,7 +2,6 @@ import java.util.List;
 import java.util.LinkedList;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 
 public class RouteList extends Command {
     private List<String> routeTags = new LinkedList<String>();
