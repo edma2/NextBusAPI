@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 
 public class RouteList extends Command {
-    private List<String> routeTags = new LinkedList<String>();
+    private List<String> routeTags;
 
     public RouteList(String agency) {
         super(agency);
@@ -27,7 +27,7 @@ public class RouteList extends Command {
         return new NextBusHandler() {
             public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body"))
-                    routeTags.clear();
+                    routeTags = new LinkedList<String>();
                 else if (tag.equals("route"))
                     routeTags.add(attributes.getValue("tag"));
             }
