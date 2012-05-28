@@ -13,6 +13,10 @@ public class Predictions extends Command {
         this.stopId = stopId;
     }
 
+    public Prediction[] getPredictions() {
+        return predictions.toArray(new Prediction[0]);
+    }
+
     @Override
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
