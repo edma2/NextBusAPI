@@ -1,34 +1,16 @@
 import java.util.List;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.HashMap;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class Predictions extends Command {
-    private List<Integer> times = new LinkedList<Integer>();
-    private String routeTag;
-    private String dirTag;
-    private String stopTag;
+    private List<Prediction> predictions = new LinkedList<Prediction>();
+    private int stopId;
 
-    public Predictions(String agency, String routeTag, String dirTag,
-                            String stopTag) {
+    public Predictions(String agency, int stopId) {
         super(agency);
-        this.routeTag = routeTag;
-        this.dirTag = dirTag;
-        this.stopTag = stopTag;
-    }
-
-    public int[] getTimes() {
-        return toIntArray(times);
-    }
-
-    private int[] toIntArray(List<Integer> list){
-        int[] ret = new int[list.size()];
-        for(int i = 0;i < ret.length;i++)
-            ret[i] = list.get(i);
-        return ret;
+        this.stopId = stopId;
     }
 
     @Override
@@ -36,26 +18,48 @@ public class Predictions extends Command {
         StringBuilder sb = new StringBuilder(super.getURL());
         sb.append("?command=predictions");
         sb.append("&a=" + getAgency());
-        sb.append("&r=" + routeTag);
-        sb.append("&d=" + dirTag);
-        sb.append("&s=" + stopTag);
+        sb.append("&stopId=" + stopId);
         return sb.toString();
     }
 
     @Override
     protected NextBusHandler getHandler() {
         return new NextBusHandler() {
-            private String dir = "";
+            String routeTag = "";
+            String stopTag = "";
+            Prediction p = null;
 
             public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body")) {
-                    times.clear();
+                    predictions.clear();
+                } else if (tag.equals("predictions")) {
+                    routeTag = attributes.getValue("routeTag");
+                    stopTag = attributes.getValue("stopTag");
+                } else if (tag.equals("direction")) {
+                    p = null;
                 } else if (tag.equals("prediction")) {
-                    int minutes =
-                        Integer.parseInt(attributes.getValue("minutes"));
-                    times.add(minutes);
+                    if (p == null) {
+                        String dirTag = attributes.getValue("dirTag");
+                        p = new Prediction(routeTag, stopTag, dirTag);
+                        predictions.add(p);
+                    }
+                    int seconds =
+                        Integer.parseInt(attributes.getValue("seconds"));
+                    p.arrivalTimes.add(seconds);
                 }
             }
         };
+    }
+
+    public static void main(String[] args) {
+        Predictions preds = new Predictions("actransit", 58558);
+        preds.execute();
+        for (Prediction p : preds.predictions) {
+            System.out.println("new Prediction!");
+            System.out.println(p.routeTag);
+            System.out.println(p.stopTag);
+            System.out.println(p.dirTag);
+            System.out.println(p.arrivalTimes);
+        }
     }
 }
