@@ -1,4 +1,4 @@
-Example Usage
+Usage Examples
 ===============
 ```java
 RouteList command = new RouteList("actransit");
@@ -14,5 +14,16 @@ for (Direction d : command.getDirections()) {
     System.out.println(d.title);
     for (Stop s : command.getStops(d))
         System.out.println(s.title);
+}
+```
+
+```java
+Predictions command = new Predictions("actransit", 52223);
+command.execute();
+for (Prediction p : command.getPredictions()) {
+    System.out.println(p.routeTitle);
+    System.out.println(p.stopTitle);
+    System.out.println(p.dirTitle);
+    System.out.println(p.arrivalTimes);
 }
 ```
