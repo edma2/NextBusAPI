@@ -21,7 +21,7 @@ for (Direction d : command.getDirections()) {
 Predictions command = new Predictions("actransit", 52223);
 command.execute();
 for (Prediction p : command.getPredictions())
-    System.out.println(p.arrivalTimes);
+    System.out.println(p.getArrivalTimes());
 ```
 
 ```java
@@ -31,5 +31,5 @@ command.addRequest("1", "null", "0301545");
 command.addRequest("1", "null", "1008290");
 command.execute();
 for (Prediction p : command.predictions)
-    System.out.println(p.arrivalTimes);
+    System.out.println(p.getArrivalTimes());
 ```
