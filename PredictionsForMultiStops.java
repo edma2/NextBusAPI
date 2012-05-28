@@ -3,7 +3,7 @@ public class PredictionsForMultiStops extends Predictions {
 
     public PredictionsForMultiStops(String agency,
                     PredictionsRequest[] requests) {
-        super(agency, 0);
+        super(agency, 0); // dummy stopId
         this.requests = requests;
     }
 
@@ -19,24 +19,5 @@ public class PredictionsForMultiStops extends Predictions {
             sb.append(request.stopTag);
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        PredictionsRequest r1 =
-                new PredictionsRequest("0301545", "1", "null");
-        PredictionsRequest r2 =
-                new PredictionsRequest("1008290", "1", "null");
-        PredictionsRequest[] requests = {r1, r2};
-
-        PredictionsForMultiStops multi =
-            new PredictionsForMultiStops("actransit", requests);
-        multi.execute();
-        for (Prediction p : multi.predictions) {
-            System.out.println("new Prediction!");
-            System.out.println(p.routeTag);
-            System.out.println(p.stopTag);
-            System.out.println(p.dirTag);
-            System.out.println(p.arrivalTimes);
-        }
     }
 }
