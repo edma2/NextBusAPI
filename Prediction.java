@@ -2,14 +2,14 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class Prediction {
-    String routeTag;
-    String stopTag;
-    String dirTag;
+    String routeTitle;
+    String stopTitle;
+    String dirTitle;
     List<Integer> arrivalTimes = new LinkedList<Integer>();
 
-    public Prediction(String routeTag, String stopTag, String dirTag) {
-        this.routeTag = routeTag;
-        this.stopTag = stopTag;
-        this.dirTag = dirTag;
+    public Prediction(String routeTitle, String stopTitle, String dirTitle) {
+        this.routeTitle = routeTitle;
+        this.stopTitle = stopTitle;
+        this.dirTitle = dirTitle;
     }
 }

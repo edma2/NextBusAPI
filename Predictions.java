@@ -29,24 +29,22 @@ public class Predictions extends Command {
     @Override
     protected NextBusHandler getHandler() {
         return new NextBusHandler() {
-            String routeTag = "";
-            String stopTag = "";
-            Prediction p = null;
+            String routeTitle = "";
+            String stopTitle = "";
+            String dirTitle = "";
+            Prediction p;
 
             public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body")) {
                     predictions.clear();
                 } else if (tag.equals("predictions")) {
-                    routeTag = attributes.getValue("routeTag");
-                    stopTag = attributes.getValue("stopTag");
+                    routeTitle = attributes.getValue("routeTitle");
+                    stopTitle = attributes.getValue("stopTitle");
                 } else if (tag.equals("direction")) {
-                    p = null;
+                    dirTitle = attributes.getValue("title");
+                    p = new Prediction(routeTitle, stopTitle, dirTitle);
+                    predictions.add(p);
                 } else if (tag.equals("prediction")) {
-                    if (p == null) {
-                        String dirTag = attributes.getValue("dirTag");
-                        p = new Prediction(routeTag, stopTag, dirTag);
-                        predictions.add(p);
-                    }
                     int seconds =
                         Integer.parseInt(attributes.getValue("seconds"));
                     p.arrivalTimes.add(seconds);
