@@ -1,3 +1,5 @@
+package ma.eugene.nextbus;
+
 import java.util.Stack;
 import java.util.EmptyStackException;
 

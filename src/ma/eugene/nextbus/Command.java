@@ -1,3 +1,5 @@
+package ma.eugene.nextbus;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.IOException;

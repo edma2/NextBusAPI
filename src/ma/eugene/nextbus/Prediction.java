@@ -1,10 +1,12 @@
+package ma.eugene.nextbus;
+
 import java.util.List;
 import java.util.LinkedList;
 
 public class Prediction {
-    String routeTitle;
-    String stopTitle;
-    String dirTitle;
+    public String routeTitle;
+    public String stopTitle;
+    public String dirTitle;
     private List<Integer> arrivalTimes = new LinkedList<Integer>();
 
     public Prediction(String routeTitle, String stopTitle, String dirTitle) {
