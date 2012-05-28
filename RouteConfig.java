@@ -7,12 +7,17 @@ import org.xml.sax.Attributes;
 
 public class RouteConfig extends Command {
     private String routeTag; 
+    private String title;
     private Map<Direction, List<Stop>> paths =
                 new HashMap<Direction, List<Stop>>();
 
     public RouteConfig(String agency, String routeTag) {
         super(agency);
         this.routeTag = routeTag;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public Direction[] getDirections() {
@@ -45,6 +50,8 @@ public class RouteConfig extends Command {
                 if (tag.equals("body")) {
                     // <body>
                     paths.clear();
+                } else if (parentTag.equals("body") && tag.equals("route")) {
+                    title = attributes.getValue("title");
                 } else if (parentTag.equals("route") && tag.equals("stop")) {
                     // <body>
                     //   <route>
