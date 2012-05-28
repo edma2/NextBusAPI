@@ -31,7 +31,6 @@ public class Predictions extends Command {
         return new NextBusHandler() {
             String routeTitle = "";
             String stopTitle = "";
-            String dirTitle = "";
             Prediction p;
 
             public void handleElement(String tag, Attributes attributes) {
@@ -41,7 +40,7 @@ public class Predictions extends Command {
                     routeTitle = attributes.getValue("routeTitle");
                     stopTitle = attributes.getValue("stopTitle");
                 } else if (tag.equals("direction")) {
-                    dirTitle = attributes.getValue("title");
+                    String dirTitle = attributes.getValue("title");
                     p = new Prediction(routeTitle, stopTitle, dirTitle);
                     predictions.add(p);
                 } else if (tag.equals("prediction")) {
