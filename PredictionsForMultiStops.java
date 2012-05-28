@@ -18,7 +18,6 @@ public class PredictionsForMultiStops extends Predictions {
             sb.append(request.dirTag + "|");
             sb.append(request.stopTag);
         }
-        System.out.println(sb);
         return sb.toString();
     }
 
