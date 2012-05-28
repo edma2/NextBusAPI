@@ -45,7 +45,7 @@ public class Predictions extends Command {
                 } else if (tag.equals("prediction")) {
                     int seconds =
                         Integer.parseInt(attributes.getValue("seconds"));
-                    p.arrivalTimes.add(seconds);
+                    p.addArrivalTime(seconds);
                 }
             }
         };

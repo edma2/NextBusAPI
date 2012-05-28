@@ -23,4 +23,8 @@ public class Prediction {
     public int[] getArrivalTimes() {
         return toIntArray(arrivalTimes);
     }
+
+    public void addArrivalTime(int seconds) {
+        arrivalTimes.add(seconds);
+    }
 }

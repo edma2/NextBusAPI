@@ -30,6 +30,6 @@ PredictionsForMultiStops command = new
 command.addRequest("1", "null", "0301545");
 command.addRequest("1", "null", "1008290");
 command.execute();
-for (Prediction p : command.predictions)
+for (Prediction p : command.getPredictions())
     System.out.println(p.getArrivalTimes());
 ```
