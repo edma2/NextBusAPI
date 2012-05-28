@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 
 public class Predictions extends Command {
-    private List<Prediction> predictions = new LinkedList<Prediction>();
+    protected List<Prediction> predictions =
+                new LinkedList<Prediction>();
     private int stopId;
 
     public Predictions(String agency, int stopId) {
@@ -48,17 +49,5 @@ public class Predictions extends Command {
                 }
             }
         };
-    }
-
-    public static void main(String[] args) {
-        Predictions preds = new Predictions("actransit", 58558);
-        preds.execute();
-        for (Prediction p : preds.predictions) {
-            System.out.println("new Prediction!");
-            System.out.println(p.routeTag);
-            System.out.println(p.stopTag);
-            System.out.println(p.dirTag);
-            System.out.println(p.arrivalTimes);
-        }
     }
 }

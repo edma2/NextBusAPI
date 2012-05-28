@@ -15,22 +15,8 @@ public class RouteConfig extends Command {
         this.routeTag = routeTag;
     }
 
-    public Direction[] getDirections() {
-        List<Direction> dirs = new LinkedList<Direction>();
-        for (Direction dir : paths.keySet())
-            dirs.add(dir);
-        return dirs.toArray(new Direction[0]);
-    }
-
-    public Stop[] getPath(Direction dir) {
-        return paths.get(dir).toArray(new Stop[0]);
-    }
-
-    public int[] getTimes(Direction dir, Stop stop) {
-        Predictions p = new Predictions(getAgency(), routeTag, dir.tag,
-                stop.tag);
-        p.execute();
-        return p.getTimes();
+    public Map<Direction, List<Stop>> getPaths() {
+        return paths;
     }
 
     @Override
@@ -85,22 +71,5 @@ public class RouteConfig extends Command {
                 }
             }
         };
-    }
-
-    public static void main(String[] args) {
-        RouteConfig rc = new RouteConfig("actransit", "65");
-        rc.execute();
-        for (Direction dir : rc.getDirections()) {
-            System.out.println("=============");
-            System.out.println(dir.title);
-            for (Stop s : rc.getPath(dir)) {
-                System.out.println("-------------");
-                System.out.println(s.title);
-                for (int time : rc.getTimes(dir, s))
-                    System.out.print(time + ", ");
-                System.out.println("-------------");
-            }
-            System.out.println("=============");
-        }
     }
 }
