@@ -34,9 +34,10 @@ public abstract class Command {
     }
 
     protected abstract NextBusHandler getHandler();
+    protected abstract String getURL();
 
-    protected String getURL() { return URL; }
     protected String getAgency() { return agency; }
+    protected String baseURL() { return URL; }
 
     private void parseXML(Reader source) throws SAXException, IOException {
         XMLReader reader = XMLReaderFactory.createXMLReader();

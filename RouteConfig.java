@@ -36,7 +36,7 @@ public class RouteConfig extends Command {
 
     @Override
     protected String getURL() {
-        StringBuilder sb = new StringBuilder(super.getURL());
+        StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=routeConfig");
         sb.append("&a=" + getAgency());
         sb.append("&r=" + routeTag);

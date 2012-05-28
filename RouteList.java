@@ -13,7 +13,7 @@ public class RouteList extends Command {
 
     @Override
     protected String getURL() {
-        StringBuilder sb = new StringBuilder(super.getURL());
+        StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=routeList");
         sb.append("&a=" + getAgency());
         return sb.toString();

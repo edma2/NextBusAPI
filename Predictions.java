@@ -15,7 +15,7 @@ public class Predictions extends Command {
 
     @Override
     protected String getURL() {
-        StringBuilder sb = new StringBuilder(super.getURL());
+        StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=predictions");
         sb.append("&a=" + getAgency());
         sb.append("&stopId=" + stopId);
