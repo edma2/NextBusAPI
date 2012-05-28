@@ -10,6 +10,10 @@ public class RouteList extends Command {
         super(agency);
     }
 
+    public String[] getRouteTags() {
+        return routeTags.toArray(new String[0]);
+    }
+
     @Override
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());

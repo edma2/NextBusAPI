@@ -15,8 +15,12 @@ public class RouteConfig extends Command {
         this.routeTag = routeTag;
     }
 
-    public Map<Direction, List<Stop>> getPaths() {
-        return paths;
+    public Direction[] getDirections() {
+        return paths.keySet().toArray(new Direction[0]);
+    }
+
+    public Stop[] getStops(Direction d) {
+        return paths.get(d).toArray(new Stop[0]);
     }
 
     @Override
