@@ -1,10 +1,28 @@
-public class PredictionsForMultiStops extends Predictions {
-    private PredictionsRequest[] requests;
+import java.util.List;
+import java.util.LinkedList;
 
-    public PredictionsForMultiStops(String agency,
-                    PredictionsRequest[] requests) {
+public class PredictionsForMultiStops extends Predictions {
+    private List<Request> requests = new LinkedList<Request>();
+
+    private class Request {
+        String routeTag;
+        String dirTag;
+        String stopTag;
+
+        Request(String routeTag, String dirTag, String stopTag) {
+            this.routeTag = routeTag;
+            this.dirTag = dirTag;
+            this.stopTag = stopTag;
+        }
+    }
+
+    public PredictionsForMultiStops(String agency) {
         super(agency, 0); // dummy stopId
-        this.requests = requests;
+    }
+
+    public void addRequest(String routeTag, String dirTag, String stopTag) {
+        Request r = new Request(routeTag, dirTag, stopTag);
+        requests.add(r);
     }
 
     @Override
@@ -12,11 +30,11 @@ public class PredictionsForMultiStops extends Predictions {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=predictionsForMultiStops");
         sb.append("&a=" + getAgency());
-        for (PredictionsRequest request : requests) {
+        for (Request r : requests) {
             sb.append("&stops=");
-            sb.append(request.routeTag + "|");
-            sb.append(request.dirTag + "|");
-            sb.append(request.stopTag);
+            sb.append(r.routeTag + "|");
+            sb.append(r.dirTag + "|");
+            sb.append(r.stopTag);
         }
         return sb.toString();
     }

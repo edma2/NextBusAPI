@@ -27,3 +27,18 @@ for (Prediction p : command.getPredictions()) {
     System.out.println(p.arrivalTimes);
 }
 ```
+
+```java
+PredictionsForMultiStops command = new
+    PredictionsForMultiStops("actransit");
+command.addRequest("1", "null", "0301545");
+command.addRequest("1", "null", "1008290");
+command.execute();
+for (Prediction p : command.predictions) {
+    System.out.println("new Prediction!");
+    System.out.println(p.routeTitle);
+    System.out.println(p.stopTitle);
+    System.out.println(p.dirTitle);
+    System.out.println(p.arrivalTimes);
+}
+```
