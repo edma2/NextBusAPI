@@ -8,17 +8,12 @@ import java.util.HashMap;
 import org.xml.sax.Attributes;
 
 public class RouteConfig extends Command {
-    private String routeTag; 
-    private String title;
+    private Route route; 
     private Map<Direction, List<Stop>> paths;
 
-    public RouteConfig(String agency, String routeTag) {
+    public RouteConfig(Agency agency, Route route) {
         super(agency);
-        this.routeTag = routeTag;
-    }
-
-    public String getTitle() {
-        return title;
+        this.route = route;
     }
 
     public Direction[] getDirections() {
@@ -33,8 +28,8 @@ public class RouteConfig extends Command {
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=routeConfig");
-        sb.append("&a=" + getAgency());
-        sb.append("&r=" + routeTag);
+        sb.append("&a=" + getAgency().tag);
+        sb.append("&r=" + route.tag);
         return sb.toString();
     }
 
@@ -51,8 +46,6 @@ public class RouteConfig extends Command {
                 if (tag.equals("body")) {
                     // <body>
                     paths = new HashMap<Direction, List<Stop>>();
-                } else if (parentTag.equals("body") && tag.equals("route")) {
-                    title = attributes.getValue("title");
                 } else if (parentTag.equals("route") && tag.equals("stop")) {
                     // <body>
                     //   <route>
@@ -83,5 +76,14 @@ public class RouteConfig extends Command {
                 }
             }
         };
+    }
+
+    public static void main(String[] args) {
+        Agency agency = new Agency("actransit", "AC Transit");
+        Route route = new Route("51B", "51 Bitch");
+        RouteConfig command = new RouteConfig(agency, route);
+        command.execute();
+        for (Direction dir : command.getDirections())
+            System.out.println(dir.title);
     }
 }
