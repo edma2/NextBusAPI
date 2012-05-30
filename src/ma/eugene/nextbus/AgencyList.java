@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 
 public class AgencyList extends Command {
-    private List<String> agencies;
+    private List<Agency> agencies;
 
-    public String[] getAgencies() {
-        return agencies.toArray(new String[0]);
+    public Agency[] getAgencies() {
+        return agencies.toArray(new Agency[0]);
     }
 
     @Override
@@ -23,10 +23,13 @@ public class AgencyList extends Command {
     protected NextBusHandler getHandler() {
         return new NextBusHandler() {
             public void handleElement(String tag, Attributes attributes) {
-                if (tag.equals("body"))
-                    agencies = new LinkedList<String>();
-                else if (tag.equals("agency"))
-                    agencies.add(attributes.getValue("tag"));
+                if (tag.equals("body")) {
+                    agencies = new LinkedList<Agency>();
+                } else if (tag.equals("agency")) {
+                    String agencyTag = attributes.getValue("tag");
+                    String agencyTitle = attributes.getValue("title");
+                    agencies.add(new Agency(agencyTag, agencyTitle));
+                }
             }
         };
     }
@@ -34,7 +37,7 @@ public class AgencyList extends Command {
     public static void main(String[] args) {
         AgencyList command = new AgencyList();
         command.execute();
-        for (String agency : command.getAgencies())
-            System.out.println(agency);
+        for (Agency agency : command.getAgencies())
+            System.out.println(agency.title);
     }
 }
