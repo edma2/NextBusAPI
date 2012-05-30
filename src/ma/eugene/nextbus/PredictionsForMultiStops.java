@@ -19,7 +19,7 @@ public class PredictionsForMultiStops extends Predictions {
     }
 
     public PredictionsForMultiStops(Agency agency) {
-        super(agency, 0); // dummy stopId
+        super(agency, ""); // dummy stopId
     }
 
     public void addRequest(Route route, Direction dir, Stop stop) {
