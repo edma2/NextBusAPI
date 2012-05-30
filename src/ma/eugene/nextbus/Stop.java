@@ -5,6 +5,10 @@ public class Stop extends TaggedTitle {
     public double longitude;
     // TODO: stopId
 
+    public Stop() {
+        super();
+    }
+
     public Stop(String tag, String title, double latitude, double longitude) {
         super(tag, title);
         this.latitude = latitude;
