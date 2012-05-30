@@ -7,6 +7,9 @@ public class Stop {
     public double longitude;
     // TODO: stopId
 
+    public Stop() {
+    }
+
     public Stop(String tag, String title, double latitude, double longitude) {
         this.tag = tag;
         this.title = title;
