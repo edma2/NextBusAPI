@@ -9,7 +9,7 @@ public class Predictions extends Command {
     protected List<Prediction> predictions;
     private int stopId;
 
-    public Predictions(String agency, int stopId) {
+    public Predictions(Agency agency, int stopId) {
         super(agency);
         this.stopId = stopId;
     }
@@ -22,7 +22,7 @@ public class Predictions extends Command {
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=predictions");
-        sb.append("&a=" + getAgency());
+        sb.append("&a=" + getAgency().tag);
         sb.append("&stopId=" + stopId);
         return sb.toString();
     }
