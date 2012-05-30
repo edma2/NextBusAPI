@@ -22,6 +22,10 @@ public abstract class Command {
         this.agency = agency;
     }
 
+    public Command() {
+        agency = "unknown";
+    }
+
     /**
      * TODO: write custom Exception class
      */
