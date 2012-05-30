@@ -6,21 +6,21 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 
 public class RouteList extends Command {
-    private List<String> routeTags;
+    private List<Route> routes;
 
-    public RouteList(String agency) {
+    public RouteList(Agency agency) {
         super(agency);
     }
 
-    public String[] getRouteTags() {
-        return routeTags.toArray(new String[0]);
+    public Route[] getRoutes() {
+        return routes.toArray(new Route[0]);
     }
 
     @Override
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=routeList");
-        sb.append("&a=" + getAgency());
+        sb.append("&a=" + getAgency().tag);
         return sb.toString();
     }
 
@@ -28,11 +28,21 @@ public class RouteList extends Command {
     protected NextBusHandler getHandler() {
         return new NextBusHandler() {
             public void handleElement(String tag, Attributes attributes) {
-                if (tag.equals("body"))
-                    routeTags = new LinkedList<String>();
-                else if (tag.equals("route"))
-                    routeTags.add(attributes.getValue("tag"));
+                if (tag.equals("body")) {
+                    routes = new LinkedList<Route>();
+                } else if (tag.equals("route")) {
+                    String routeTag = attributes.getValue("tag");
+                    String routeTitle = attributes.getValue("title");
+                    routes.add(new Route(routeTag, routeTitle));
+                }
             }
         };
+    }
+
+    public static void main(String[] args) {
+        RouteList command = new RouteList(new Agency("actransit", "AC Transit"));
+        command.execute();
+        for (Route route : command.getRoutes())
+            System.out.println(route.title);
     }
 }

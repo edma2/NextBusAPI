@@ -13,17 +13,19 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.InputSource;
 
+import ma.eugene.nextbus.Agency;
+
 public abstract class Command {
     private final String URL =
         "http://webservices.nextbus.com/service/publicXMLFeed";
-    private String agency;
+    private Agency agency;
 
-    public Command(String agency) {
+    public Command(Agency agency) {
         this.agency = agency;
     }
 
     public Command() {
-        agency = "unknown";
+        agency = new Agency("?", "?");
     }
 
     /**
@@ -42,7 +44,7 @@ public abstract class Command {
     protected abstract NextBusHandler getHandler();
     protected abstract String getURL();
 
-    protected String getAgency() { return agency; }
+    protected Agency getAgency() { return agency; }
     protected String baseURL() { return URL; }
 
     private void parseXML(Reader source) throws SAXException, IOException {
