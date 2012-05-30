@@ -40,19 +40,4 @@ public class PredictionsForMultiStops extends Predictions {
         }
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        Agency agency = new Agency("actransit", "AC Transit");
-        PredictionsForMultiStops command =
-            new PredictionsForMultiStops(agency);
-        command.addRequest(new Route("1", "1"), new Direction("null", "?"),
-                new Stop("1008290", "A + B", 0, 0));
-        command.addRequest(new Route("1", "1"), new Direction("null", "?"),
-                new Stop("0301545", "C + D", 0, 0));
-        command.execute();
-        for (Prediction p : command.getPredictions()) {
-            for (int i : p.getArrivalTimes())
-                System.out.println(i);
-        }
-    }
 }

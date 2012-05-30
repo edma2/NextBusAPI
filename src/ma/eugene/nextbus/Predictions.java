@@ -7,9 +7,9 @@ import org.xml.sax.Attributes;
 
 public class Predictions extends Command {
     protected List<Prediction> predictions;
-    private int stopId;
+    private String stopId;
 
-    public Predictions(Agency agency, int stopId) {
+    public Predictions(Agency agency, String stopId) {
         super(agency);
         this.stopId = stopId;
     }
@@ -32,7 +32,7 @@ public class Predictions extends Command {
         return new NextBusHandler() {
             String routeTitle = "";
             String stopTitle = "";
-            Prediction p;
+            String dirTitle = "";
 
             public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body")) {
@@ -41,15 +41,28 @@ public class Predictions extends Command {
                     routeTitle = attributes.getValue("routeTitle");
                     stopTitle = attributes.getValue("stopTitle");
                 } else if (tag.equals("direction")) {
-                    String dirTitle = attributes.getValue("title");
-                    p = new Prediction(routeTitle, stopTitle, dirTitle);
-                    predictions.add(p);
+                    dirTitle = attributes.getValue("title");
                 } else if (tag.equals("prediction")) {
-                    int seconds =
-                        Integer.parseInt(attributes.getValue("seconds"));
-                    p.addArrivalTime(seconds);
+                    int seconds = Integer.parseInt(
+                            attributes.getValue("seconds"));
+                    predictions.add(new Prediction(routeTitle, stopTitle,
+                                dirTitle, seconds));
                 }
             }
         };
+    }
+
+    public static void main(String[] args) {
+        Agency mbta = new Agency("mbta", "MBTA");
+        Predictions command = new Predictions(mbta, "00731");
+        command.execute();
+        for (Prediction p : command.getPredictions()) {
+            System.out.println("----------------------");
+            System.out.println(p.routeTitle);
+            System.out.println(p.dirTitle);
+            System.out.println(p.stopTitle);
+            System.out.println(p.seconds);
+            System.out.println("----------------------");
+        }
     }
 }
