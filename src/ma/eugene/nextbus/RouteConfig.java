@@ -9,7 +9,8 @@ import org.xml.sax.Attributes;
 
 public class RouteConfig extends Command {
     private Route route; 
-    private Map<Direction, List<Stop>> paths;
+    private Map<Direction, List<Stop>> paths =
+                            new HashMap<Direction, List<Stop>>();
 
     public RouteConfig(Agency agency, Route route) {
         super(agency);
@@ -45,7 +46,7 @@ public class RouteConfig extends Command {
                 String parentTag = getLastTag();
                 if (tag.equals("body")) {
                     // <body>
-                    paths = new HashMap<Direction, List<Stop>>();
+                    paths.clear();
                 } else if (parentTag.equals("route") && tag.equals("stop")) {
                     // <body>
                     //   <route>

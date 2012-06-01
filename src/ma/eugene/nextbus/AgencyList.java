@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 
 public class AgencyList extends Command {
-    private List<Agency> agencies;
+    private List<Agency> agencies = new LinkedList<Agency>();
 
     public Agency[] getAgencies() {
         return agencies.toArray(new Agency[0]);
@@ -24,7 +24,7 @@ public class AgencyList extends Command {
         return new NextBusHandler() {
             public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body")) {
-                    agencies = new LinkedList<Agency>();
+                    agencies.clear();
                 } else if (tag.equals("agency")) {
                     String agencyTag = attributes.getValue("tag");
                     String agencyTitle = attributes.getValue("title");

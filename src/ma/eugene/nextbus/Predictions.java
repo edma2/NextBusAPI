@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import org.xml.sax.Attributes;
 
 public class Predictions extends Command {
-    protected List<Prediction> predictions;
+    protected List<Prediction> predictions = new LinkedList<Prediction>();
     private String stopId;
 
     public Predictions(Agency agency, String stopId) {
@@ -36,7 +36,7 @@ public class Predictions extends Command {
 
             public void handleElement(String tag, Attributes attributes) {
                 if (tag.equals("body")) {
-                    predictions = new LinkedList<Prediction>();
+                    predictions.clear();
                 } else if (tag.equals("predictions")) {
                     routeTitle = attributes.getValue("routeTitle");
                     stopTitle = attributes.getValue("stopTitle");
