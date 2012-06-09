@@ -6,18 +6,6 @@ import java.util.LinkedList;
 public class PredictionsForMultiStops extends Predictions {
     private List<Request> requests = new LinkedList<Request>();
 
-    private class Request {
-        Route route;
-        Direction dir;
-        Stop stop;
-
-        Request(Route route, Direction dir, Stop stop) {
-            this.route = route;
-            this.dir = dir;
-            this.stop = stop;
-        }
-    }
-
     public PredictionsForMultiStops(Agency agency) {
         super(agency, ""); // dummy stopId
     }
