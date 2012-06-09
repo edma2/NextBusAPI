@@ -22,7 +22,7 @@ public class Predictions extends Command {
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=predictions");
-        sb.append("&a=" + getAgency().tag);
+        sb.append("&a=" + enc(getAgency().tag));
         sb.append("&stopId=" + stopId);
         return sb.toString();
     }

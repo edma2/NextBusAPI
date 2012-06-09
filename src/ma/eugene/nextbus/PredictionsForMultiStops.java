@@ -19,12 +19,12 @@ public class PredictionsForMultiStops extends Predictions {
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=predictionsForMultiStops");
-        sb.append("&a=" + getAgency().tag);
+        sb.append("&a=" + enc(getAgency().tag));
         for (Request r : requests) {
             sb.append("&stops=");
-            sb.append(r.route.tag + "|");
-            sb.append(r.dir.tag + "|");
-            sb.append(r.stop.tag);
+            sb.append(enc(r.route.tag) + "|");
+            sb.append(enc(r.dir.tag) + "|");
+            sb.append(enc(r.stop.tag));
         }
         return sb.toString();
     }

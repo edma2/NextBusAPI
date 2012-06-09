@@ -246,9 +246,9 @@ public class DatabaseBuilder {
     }
 
     public static void main(String[] args) {
-        Agency actransit = new Agency("actransit", "AC Transit");
-        DatabaseBuilder builder = new DatabaseBuilder(actransit);
         try {
+            Agency muni = new Agency("sf-muni", "San Francisco Muni");
+            DatabaseBuilder builder = new DatabaseBuilder(muni);
             builder.run();
         } catch (SQLException ex) {
             ex.printStackTrace();

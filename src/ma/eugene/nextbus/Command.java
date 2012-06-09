@@ -2,11 +2,13 @@ package ma.eugene.nextbus;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
@@ -46,6 +48,14 @@ public abstract class Command {
 
     protected Agency getAgency() { return agency; }
     protected String baseURL() { return URL; }
+
+    protected String enc(String s) {
+        try {
+            s = URLEncoder.encode(s, "UTF8");
+        } catch (UnsupportedEncodingException ex) {
+        }
+        return s;
+    }
 
     private void parseXML(Reader source) throws SAXException, IOException {
         XMLReader reader = XMLReaderFactory.createXMLReader();

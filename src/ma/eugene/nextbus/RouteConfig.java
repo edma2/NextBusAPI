@@ -29,8 +29,8 @@ public class RouteConfig extends Command {
     protected String getURL() {
         StringBuilder sb = new StringBuilder(baseURL());
         sb.append("?command=routeConfig");
-        sb.append("&a=" + getAgency().tag);
-        sb.append("&r=" + route.tag);
+        sb.append("&a=" + enc(getAgency().tag));
+        sb.append("&r=" + enc(route.tag));
         return sb.toString();
     }
 
