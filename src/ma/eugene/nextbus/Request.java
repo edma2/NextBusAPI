@@ -1,9 +1,9 @@
 package ma.eugene.nextbus;
 
 public class Request {
-    Route route;
-    Direction dir;
-    Stop stop;
+    public Route route;
+    public Direction dir;
+    public Stop stop;
 
     public Request(Route route, Direction dir, Stop stop) {
         this.route = route;
