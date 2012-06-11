@@ -1,6 +1,6 @@
 package ma.eugene.nextbus;
 
-public abstract class TaggedTitle {
+abstract class TaggedTitle {
     public String tag;
     public String title;
 
